@@ -9,55 +9,55 @@
   </div>
   <div class="row">
     <!-- Total Dosen -->
-    {{-- <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
       <div class="card card-statistic-1">
         <div class="card-icon bg-primary">
           <i class="far fa-user"></i>
         </div>
         <div class="card-wrap">
           <div class="card-header">
-            <h4>Total Dosen</h4>
+            <h4>Total Pegawai</h4>
           </div>
           <div class="card-body">
-            {{ $total_dosen }}
+            {{ $total_pegawai }}
           </div>
         </div>
       </div>
-    </div> --}}
+    </div>
 
     <!-- Total User -->
-    {{-- <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
       <div class="card card-statistic-1">
         <div class="card-icon bg-danger">
           <i class="far fa-user"></i>
         </div>
         <div class="card-wrap">
           <div class="card-header">
-            <h4>Total User</h4>
+            <h4>Total Jabatan</h4>
           </div>
           <div class="card-body">
-            {{ $total_user }}
+            {{ $total_jabatan }}
           </div>
         </div>
       </div>
-    </div> --}}
+    </div>
 
     <!-- Total Mata Kuliah -->
-    {{-- <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
       <div class="card card-statistic-1">
         <div class="card-icon bg-success">
           <i class="fas fa-book"></i>
         </div>
         <div class="card-wrap">
           <div class="card-header">
-            <h4>Total Mata Kuliah</h4>
+            <h4>Total Bidang</h4>
           </div>
           <div class="card-body">
-            {{ $total_matakuliah }}
+            {{ $total_bidang }}
           </div>
         </div>
       </div>
-    </div> --}}
+    </div>
   </div>
 </section>
 @endsection

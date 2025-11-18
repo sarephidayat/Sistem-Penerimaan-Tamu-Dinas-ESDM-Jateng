@@ -22,7 +22,7 @@
       <!-- Menu Dosen -->
       <li class="dropdown">
         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
-          <i class="fas fa-columns"></i> <span>Dosen</span>
+          <i class="fas fa-columns"></i> <span>Check-In</span>
         </a>
         <ul class="dropdown-menu">
           <li><a class="nav-link" href="{{ url('/dosen') }}">List</a></li>
@@ -33,7 +33,7 @@
       <!-- Menu User -->
       <li class="dropdown">
         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
-          <i class="fas fa-users"></i> <span>User</span>
+          <i class="fas fa-users"></i> <span>Check-Out</span>
         </a>
         <ul class="dropdown-menu">
           <li><a class="nav-link" href="{{ url('/user') }}">List</a></li>

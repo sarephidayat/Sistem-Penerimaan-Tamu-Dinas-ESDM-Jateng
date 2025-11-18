@@ -15,7 +15,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // hanya bisa diakses kalau login
 Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware('cekLogin')
+    // ->middleware('cekLogin')
     ->name('dashboard');
 
 
