@@ -8,8 +8,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('master_bidang', function (Blueprint $table) {
-            $table->id();
-            $table->string('kode_bidang', 10)->unique();
+            $table->id()->unique();
             $table->string('nama_bidang');
             $table->timestamps();
         });

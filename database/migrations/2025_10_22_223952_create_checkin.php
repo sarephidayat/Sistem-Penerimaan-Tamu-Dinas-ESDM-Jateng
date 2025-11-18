@@ -20,8 +20,8 @@ return new class extends Migration {
             $table->timestamp('waktu_masuk')->nullable();
 
             // Foreign key ke tabel master_bidang dan status
-            $table->foreignId('master_bidang_id')->nullable()->constrained('master_bidang')->onDelete('set null');
-            $table->foreignId('status_id')->nullable()->constrained('status')->onDelete('set null');
+            $table->foreignId('id_bidang')->nullable()->constrained('master_bidang')->onDelete('set null');
+            $table->foreignId('id_status')->nullable()->constrained('status')->onDelete('set null');
 
             $table->timestamps();
         });

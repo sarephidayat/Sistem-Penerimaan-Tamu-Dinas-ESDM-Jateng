@@ -17,6 +17,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             MasterBidangSeeder::class,
             MasterStatusSeeder::class,
+            MasterNamaSeeder::class,
+            MasterJabatanSeeder::class,
+            UserPegawaiSeeder::class,
             AdminSeeder::class,
             CheckinSeeder::class,
             CheckoutSeeder::class,
