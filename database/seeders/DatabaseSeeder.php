@@ -15,11 +15,11 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
         $this->call([
-            LoginSeeder::class,
-            DosenSeeder::class,
-            MahasiswaSeeder::class,
-            MatakuliahSeeder::class,
-            NilaiSeeder::class,
+            MasterBidangSeeder::class,
+            MasterStatusSeeder::class,
+            AdminSeeder::class,
+            CheckinSeeder::class,
+            CheckoutSeeder::class,
         ]);
     }
 }
