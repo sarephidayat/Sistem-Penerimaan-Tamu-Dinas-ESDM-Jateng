@@ -7,20 +7,20 @@
 </head>
 <body>
     {{-- Header --}}
-    @include('layout._header')
+    @include('admin/layout._header')
 
     <div class="wrapper">
         {{-- Sidebar --}}
-        @include('layout._sidenav')
+        @include('admin/layout._sidenav')
 
         <div class="content">
             {{-- Top bar --}}
-            @include('layout._top')
+            @include('admin/layout._top')
 
         </div>
     </div>
 
     {{-- Footer / Bottom --}}
-    @include('layout._bottom')
+    @include('admin/layout._bottom')
 </body>
 </html>

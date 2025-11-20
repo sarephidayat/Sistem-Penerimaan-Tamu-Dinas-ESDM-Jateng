@@ -21,7 +21,7 @@ return new class extends Migration {
 
             // Foreign key ke tabel master_bidang dan status
             $table->foreignId('id_bidang')->nullable()->constrained('master_bidang')->onDelete('set null');
-            $table->foreignId('id_status')->nullable()->constrained('status')->onDelete('set null');
+            $table->foreignId('id_status')->nullable()->constrained('master_status')->onDelete('set null');
 
             $table->timestamps();
         });

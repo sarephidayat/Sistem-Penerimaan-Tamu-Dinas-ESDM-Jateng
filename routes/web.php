@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DosenController;
+use App\Http\Controllers\CheckinController;
 use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
@@ -19,11 +20,17 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->name('dashboard');
 
 
+// ===============================Checkin================================
+Route::get('/checkin', [CheckinController::class, 'index'])
+    // ->middleware('cekLogin')
+    ->name('checkin');
+
+
 
 // ===============================DOSEN CONTROLLER================================
 // daftar dosen
 Route::get('/dosen', [DosenController::class, 'index'])
-    ->middleware('cekLogin')
+    // ->middleware('cekLogin')
     ->name('dosen');
 
 // tambah dosen

@@ -31,10 +31,10 @@
     <div class="main-wrapper main-wrapper-1">
 
       {{-- Header --}}
-      @include('layout._header')
+      @include('admin/layout._header')
 
       {{-- Sidebar --}}
-      @include('layout._sidenav')
+      @include('admin/layout._sidenav')
 
       <!-- Main Content -->
       <div class="main-content">

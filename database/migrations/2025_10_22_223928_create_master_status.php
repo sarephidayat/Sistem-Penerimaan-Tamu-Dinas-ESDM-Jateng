@@ -7,9 +7,8 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('status', function (Blueprint $table) {
+        Schema::create('master_status', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_status', 10)->unique();
             $table->string('nama_status');
             $table->timestamps();
         });

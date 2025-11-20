@@ -2,16 +2,144 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class CheckinSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        //
+        DB::table('checkin')->insert([
+            [
+                'email' => 'budi@example.com',
+                'nama_lengkap' => 'Budi Santoso',
+                'nik' => '3374091201990001',
+                'instansi' => 'PT PLN',
+                'no_hp' => '081234567890',
+                'bidang_tujuan' => 'Bidang Ketenagalistrikan',
+                'keperluan' => 'Koordinasi terkait inspeksi jaringan listrik.',
+                'foto_selfie' => null,
+                'waktu_masuk' => now()->subHours(3),
+                'id_bidang' => 5,
+                'id_status' => 1,
+            ],
+            [
+                'email' => 'sari@example.com',
+                'nama_lengkap' => 'Sari Yuliana',
+                'nik' => '3374062204980004',
+                'instansi' => 'Universitas Negeri Semarang',
+                'no_hp' => '082245667788',
+                'bidang_tujuan' => 'Bidang EBT',
+                'keperluan' => 'Pengajuan data penelitian energi biomassa.',
+                'foto_selfie' => null,
+                'waktu_masuk' => now()->subHours(2),
+                'id_bidang' => 6,
+                'id_status' => 2,
+            ],
+            [
+                'email' => 'andi@example.com',
+                'nama_lengkap' => 'Andi Prasetyo',
+                'nik' => '3374051001980003',
+                'instansi' => 'PT Geo Mineral',
+                'no_hp' => '081322445566',
+                'bidang_tujuan' => 'Bidang Geologi',
+                'keperluan' => 'Permohonan data peta geologi regional.',
+                'foto_selfie' => null,
+                'waktu_masuk' => now()->subHours(1),
+                'id_bidang' => 3,
+                'id_status' => 1,
+            ],
+            [
+                'email' => 'melati@example.com',
+                'nama_lengkap' => 'Melati Kusuma',
+                'nik' => '3374082306980002',
+                'instansi' => 'CV Sumber Baru',
+                'no_hp' => '085799224466',
+                'bidang_tujuan' => 'UPT Lab ESDM',
+                'keperluan' => 'Penyerahan sampel batuan untuk uji lab.',
+                'foto_selfie' => null,
+                'waktu_masuk' => now()->subMinutes(45),
+                'id_bidang' => 19,
+                'id_status' => 1,
+            ],
+            [
+                'email' => 'dea@example.com',
+                'nama_lengkap' => 'Dea Lestari',
+                'nik' => '3374021102990005',
+                'instansi' => 'Mahasiswa',
+                'no_hp' => '081338882277',
+                'bidang_tujuan' => 'Bidang Air Tanah',
+                'keperluan' => 'Pengajuan wawancara tugas akhir.',
+                'foto_selfie' => null,
+                'waktu_masuk' => now()->subMinutes(30),
+                'id_bidang' => 4,
+                'id_status' => 3,
+            ],
+            [
+                'email' => 'agus@example.com',
+                'nama_lengkap' => 'Agus Raharjo',
+                'nik' => '3374031212970007',
+                'instansi' => 'Warga',
+                'no_hp' => '085345667788',
+                'bidang_tujuan' => 'Cabang Semarang–Demak',
+                'keperluan' => 'Pengaduan terkait sumur bor.',
+                'foto_selfie' => null,
+                'waktu_masuk' => now()->subMinutes(20),
+                'id_bidang' => 9,
+                'id_status' => 1,
+            ],
+            [
+                'email' => 'rina@example.com',
+                'nama_lengkap' => 'Rina Andayani',
+                'nik' => '3374050212890006',
+                'instansi' => 'Kantor Kecamatan',
+                'no_hp' => '082345112233',
+                'bidang_tujuan' => 'Sekretariat',
+                'keperluan' => 'Pengurusan surat rekomendasi.',
+                'foto_selfie' => null,
+                'waktu_masuk' => now()->subMinutes(10),
+                'id_bidang' => 2,
+                'id_status' => 2,
+            ],
+            [
+                'email' => 'eko@example.com',
+                'nama_lengkap' => 'Eko Prasetya',
+                'nik' => '3374091012900008',
+                'instansi' => 'PT Mitra Energi',
+                'no_hp' => '081234110022',
+                'bidang_tujuan' => 'Bidang EBT',
+                'keperluan' => 'Presentasi kerja sama energi surya.',
+                'foto_selfie' => null,
+                'waktu_masuk' => now()->subMinutes(5),
+                'id_bidang' => 6,
+                'id_status' => 1,
+            ],
+            [
+                'email' => 'lisa@example.com',
+                'nama_lengkap' => 'Lisa Nurfadilah',
+                'nik' => '3374092901990009',
+                'instansi' => 'BUMDes',
+                'no_hp' => '082221100334',
+                'bidang_tujuan' => 'Cabang Kendeng Selatan',
+                'keperluan' => 'Permintaan pendampingan survei lapangan.',
+                'foto_selfie' => null,
+                'waktu_masuk' => now(),
+                'id_bidang' => 7,
+                'id_status' => 1,
+            ],
+            [
+                'email' => 'farhan@example.com',
+                'nama_lengkap' => 'Farhan Ardiansyah',
+                'nik' => '3374011501980010',
+                'instansi' => 'PT Surveyor Nusantara',
+                'no_hp' => '083112233445',
+                'bidang_tujuan' => 'Cabang Solo',
+                'keperluan' => 'Koordinasi kegiatan pengecekan lapangan.',
+                'foto_selfie' => null,
+                'waktu_masuk' => now(),
+                'id_bidang' => 11,
+                'id_status' => 2,
+            ],
+        ]);
     }
 }
