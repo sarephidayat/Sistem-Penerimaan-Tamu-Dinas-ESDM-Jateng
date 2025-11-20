@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChartController;
 use App\Http\Controllers\DosenController;
+use App\Http\Controllers\KadisController;
 use App\Http\Controllers\CheckinController;
 use App\Http\Controllers\DashboardController;
 
@@ -24,6 +26,16 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 Route::get('/checkin', [CheckinController::class, 'index'])
     // ->middleware('cekLogin')
     ->name('checkin');
+
+
+// ==============================Kepala Dinas===============================
+Route::get('/kepala-dinas', [KadisController::class, 'index'])
+    // ->middleware('cekLogin')
+    ->name('kepala-dinas');
+
+
+Route::get('/api/chart-tren-kunjungan', [ChartController::class, 'GrafikTrenKunjungan']);
+Route::get('/chart-agenda-mingguan', [ChartController::class, 'chartAgendaMingguan']);
 
 
 

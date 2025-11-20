@@ -17,6 +17,6 @@ class DashboardController extends Controller
         $total_pegawai = UserPegawai::count();
         $total_jabatan = MasterJabatan::count();
 
-        return view('dashboard.index', compact('total_bidang', 'total_pegawai', 'total_jabatan'));
+        return view('admin/dashboard.index', compact('total_bidang', 'total_pegawai', 'total_jabatan'));
     }
 }
