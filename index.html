@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Buku Tamu Digital (Live Preview)</title>
+    <style>
+      /* --- General Styling --- */
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+        background-color: #f4f7f6;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: 100vh;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 600px;
+        background-color: #ffffff;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 2rem;
+      }
+
+      /* --- Form Styling --- */
+      #guestForm {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      fieldset {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 1.5rem;
+      }
+
+      legend {
+        font-weight: 600;
+        color: #0056b3;
+        padding: 0 10px;
+        font-size: 1.1rem;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 1rem;
+      }
+
+      label {
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: #555;
+      }
+
+      input[type="text"],
+      input[type="tel"],
+      input[type="email"],
+      select {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+        transition: border-color 0.3s, box-shadow 0.3s;
+      }
+
+      input:focus,
+      select:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+      }
+
+      .input-error {
+        border-color: #dc3545 !important;
+        box-shadow: 0 0 5px rgba(220, 53, 69, 0.25) !important;
+      }
+
+      .error-message {
+        color: #dc3545;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+        min-height: 1.2em;
+      }
+
+      /* --- Photo Section Styling --- */
+      .photo-section {
+        text-align: center;
+      }
+
+      .photo-placeholder {
+        position: relative; /* Membuat konteks untuk positioning */
+        width: 100%;
+        max-width: 300px;
+        height: 400px; /* Berikan tinggi tetap untuk mencegah pergeseran layout */
+        margin: 0 auto;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #e0e0e0;
+        overflow: hidden; /* Sembunyikan bagian video yang mungkin melampaui batas */
+      }
+
+      /* Gaya yang sama untuk img dan video agar posisinya identik */
+      #photoPreview,
+      #video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Memastikan gambar/video memenuhi container tanpa distorsi */
+        border-radius: 5px;
+      }
+
+      #capturePhotoBtn {
+        margin-top: 1rem;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        color: white;
+        background-color: #28a745;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      #capturePhotoBtn:hover {
+        background-color: #218838;
+      }
+
+      #capturePhotoBtn:disabled {
+        background-color: #aaa;
+        cursor: not-allowed;
+      }
+
+      /* --- Submit Button & Result --- */
+      .submit-btn {
+        padding: 1rem;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: white;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-top: 1rem;
+      }
+
+      .submit-btn:hover {
+        background-color: #0056b3;
+      }
+
+      #submissionResult {
+        margin-top: 2rem;
+        padding: 1.5rem;
+        border: 1px solid #28a745;
+        border-radius: 8px;
+        background-color: #f0fff4;
+      }
+
+      #submissionResult h2 {
+        color: #155724;
+        margin-top: 0;
+      }
+
+      #submissionResult p {
+        line-height: 1.6;
+        color: #333;
+      }
+
+      #submissionResult img {
+        max-width: 200px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        margin-top: 10px;
+      }
+
+      /* Elemen canvas disembunyikan, tetapi video dan img akan saling menutupi */
+      #canvas {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Form Buku Tamu Digital</h1>
+
+      <form id="guestForm" novalidate>
+        <!-- Bagian Data Diri -->
+        <fieldset>
+          <legend>Data Diri</legend>
+          <div class="form-group">
+            <label for="fullName">Nama Lengkap *</label>
+            <input type="text" id="fullName" name="fullName" required />
+            <span class="error-message"></span>
+          </div>
+          <div class="form-group">
+            <label for="idNumber">No. Identitas (KTP/SIM) *</label>
+            <input type="text" id="idNumber" name="idNumber" required />
+            <span class="error-message"></span>
+          </div>
+          <div class="form-group">
+            <label for="phoneNumber">No. HP/Telepon *</label>
+            <input type="tel" id="phoneNumber" name="phoneNumber" required />
+            <span class="error-message"></span>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" />
+            <span class="error-message"></span>
+          </div>
+        </fieldset>
+
+        <!-- Bagian Data Kunjungan -->
+        <fieldset>
+          <legend>Data Kunjungan</legend>
+          <div class="form-group">
+            <label for="employeeName">Nama Pegawai yang Dituju *</label>
+            <input type="text" id="employeeName" name="employeeName" required />
+            <span class="error-message"></span>
+          </div>
+          <div class="form-group">
+            <label for="purpose">Tujuan Kunjungan *</label>
+            <select id="purpose" name="purpose" required>
+              <option value="">-- Pilih Tujuan --</option>
+              <option value="Rapat">Rapat</option>
+              <option value="Presentasi/Kerjasama">Presentasi/Kerjasama</option>
+              <option value="Urusan Administrasi">Urusan Administrasi</option>
+              <option value="Lainnya">Lainnya</option>
+            </select>
+            <span class="error-message"></span>
+          </div>
+          <div class="form-group">
+            <label for="institution">Asal Instansi/Perusahaan *</label>
+            <input type="text" id="institution" name="institution" required />
+            <span class="error-message"></span>
+          </div>
+        </fieldset>
+
+        <!-- Bagian Foto Tamu -->
+        <fieldset>
+          <legend>Foto Tamu (Opsional)</legend>
+          <div class="photo-section">
+            <div class="photo-placeholder" id="photoPlaceholder">
+              <!-- Elemen video ditampilkan di atas gambar -->
+              <video id="video" autoplay playsinline></video>
+              <img
+                src="https://placehold.co/300x400/e0e0e0/757575?text=Foto+Belum+Diambil"
+                alt="Foto Tamu"
+                id="photoPreview"
+              />
+            </div>
+            <canvas id="canvas"></canvas>
+          </div>
+          <button type="button" id="capturePhotoBtn">Ambil Foto</button>
+        </fieldset>
+
+        <button type="submit" class="submit-btn">Kirim Data</button>
+      </form>
+
+      <div id="submissionResult" style="display: none"></div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // --- ELEMEN FORM ---
+        const guestForm = document.getElementById("guestForm");
+        const submissionResult = document.getElementById("submissionResult");
+
+        // --- ELEMEN FOTO ---
+        const capturePhotoBtn = document.getElementById("capturePhotoBtn");
+        const photoPreview = document.getElementById("photoPreview");
+        const video = document.getElementById("video");
+        const canvas = document.getElementById("canvas");
+        const context = canvas.getContext("2d");
+        let stream = null;
+
+        // --- FUNGSI KAMERA ---
+        async function startCamera() {
+          try {
+            stream = await navigator.mediaDevices.getUserMedia({
+              video: { facingMode: "user" },
+              audio: false,
+            });
+            video.srcObject = stream;
+
+            // Tampilkan video, sembunyikan gambar placeholder
+            video.style.display = "block";
+            photoPreview.style.display = "none";
+
+            capturePhotoBtn.textContent = "Tangkap Gambar";
+            capturePhotoBtn.onclick = captureImage;
+          } catch (err) {
+            console.error("Error accessing camera: ", err);
+            alert(
+              "Tidak dapat mengakses kamera. Pastikan Anda telah memberikan izin."
+            );
+            capturePhotoBtn.disabled = true;
+          }
+        }
+
+        function captureImage() {
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          context.drawImage(video, 0, 0);
+          photoPreview.src = canvas.toDataURL("image/png");
+
+          stopCamera();
+
+          // Sembunyikan video, tampilkan gambar hasil tangkapan
+          video.style.display = "none";
+          photoPreview.style.display = "block";
+
+          capturePhotoBtn.textContent = "Ambil Ulang Foto";
+          capturePhotoBtn.onclick = retakePhoto;
+        }
+
+        function stopCamera() {
+          if (stream) {
+            stream.getTracks().forEach((track) => track.stop());
+          }
+        }
+
+        function retakePhoto() {
+          photoPreview.src =
+            "https://placehold.co/300x400/e0e0e0/757575?text=Foto+Belum+Diambil";
+          startCamera();
+        }
+
+        // Event listener untuk tombol foto
+        capturePhotoBtn.addEventListener("click", startCamera);
+
+        // --- FUNGSI VALIDASI FORM ---
+        function validateForm() {
+          let isValid = true;
+          const requiredFields = guestForm.querySelectorAll("[required]");
+
+          requiredFields.forEach((field) => {
+            const errorMessage = field.nextElementSibling;
+            field.classList.remove("input-error");
+            errorMessage.textContent = "";
+
+            if (!field.value.trim()) {
+              showError(field, errorMessage, "Field ini wajib diisi.");
+              isValid = false;
+            } else {
+              if (field.type === "email" && field.value) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(field.value)) {
+                  showError(field, errorMessage, "Format email tidak valid.");
+                  isValid = false;
+                }
+              }
+            }
+          });
+          return isValid;
+        }
+
+        function showError(field, element, message) {
+          field.classList.add("input-error");
+          element.textContent = message;
+        }
+
+        // --- FUNGSI PENGIRIMAN DAN TAMPIL DATA ---
+        guestForm.addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          if (validateForm()) {
+            const formData = new FormData(guestForm);
+            const data = Object.fromEntries(formData.entries());
+
+            const photoSrc = photoPreview.src.includes("placehold.co")
+              ? null
+              : photoPreview.src;
+            if (photoSrc) {
+              data.foto = photoSrc;
+            }
+
+            displayResult(data);
+
+            guestForm.style.display = "none";
+            submissionResult.style.display = "block";
+          } else {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }
+        });
+
+        function displayResult(data) {
+          submissionResult.innerHTML = "";
+
+          const title = document.createElement("h2");
+          title.textContent = "✅ Data Anda Berhasil Terkirim!";
+          submissionResult.appendChild(title);
+
+          for (const key in data) {
+            if (data.hasOwnProperty(key)) {
+              const p = document.createElement("p");
+              let label = key
+                .replace(/([A-Z])/g, " $1")
+                .replace(/^./, (str) => str.toUpperCase());
+
+              if (key === "foto") {
+                p.innerHTML = `<strong>Foto:</strong><br><img src="${data[key]}" alt="Foto Tamu">`;
+              } else {
+                p.innerHTML = `<strong>${label}:</strong> ${data[key]}`;
+              }
+              submissionResult.appendChild(p);
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
