@@ -15,12 +15,11 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // $total_bidang = MasterBidang::count();
-        // $total_pegawai = UserPegawai::count();
-        // $total_jabatan = MasterJabatan::count();
-
-        // Statistik tamu
-        $total_tamu_sedang_berkunjung = Checkin::where('id_status', 1)->count();
+        // dd(session()->all());
+        // Statistik
+        $total_tamu_sedang_berkunjung = Checkin::whereDate('waktu_masuk', Carbon::today())
+            ->doesntHave('checkout')
+            ->count();
 
         $total_tamu_hari_ini = Checkin::whereDate('waktu_masuk', Carbon::today())->count();
 
@@ -33,15 +32,22 @@ class DashboardController extends Controller
             ->whereYear('waktu_masuk', Carbon::now()->year)
             ->count();
 
-        // List penerimaan tamu terbaru
-        $list_tamu = Checkin::all()->sortByDesc('waktu_masuk');
+        // 🔥 INI KUNCI: TAMU HARI INI + CHECKOUT
+        $tamu_hari_ini = Checkin::with([
+            'bidang',
+            'status',
+            'checkout'
+        ])
+            ->whereDate('waktu_masuk', Carbon::today())
+            ->orderBy('waktu_masuk', 'desc')
+            ->get();
 
         return view('admin.dashboard.index', compact(
             'total_tamu_sedang_berkunjung',
             'total_tamu_hari_ini',
             'total_tamu_minggu_ini',
             'total_tamu_bulan_ini',
-            'list_tamu'
+            'tamu_hari_ini'
         ));
     }
 }

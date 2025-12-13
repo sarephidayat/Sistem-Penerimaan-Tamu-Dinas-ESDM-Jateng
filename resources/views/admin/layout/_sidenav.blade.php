@@ -19,27 +19,33 @@
 
       <li class="menu-header">Main Feature</li>
 
-      <!-- Menu Dosen -->
-      <li class="dropdown">
-        <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
+      <!-- Menu Checkin -->
+      <li>
+        <a href="{{ url('/checkin') }}" class="nav-link">
           <i class="fas fa-columns"></i> <span>Check-In</span>
         </a>
-        <ul class="dropdown-menu">
-          <li><a class="nav-link" href="{{ url('/dosen') }}">List</a></li>
-          <li><a class="nav-link" href="{{ url('/dosen/create') }}">Tambah Data</a></li>
-        </ul>
       </li>
 
-      <!-- Menu User -->
-      <li class="dropdown">
-        <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
+      <!-- Menu Checkout -->
+      <li>
+        <a href="{{ url('/checkout') }}" class="nav-link">
           <i class="fas fa-users"></i> <span>Check-Out</span>
         </a>
-        <ul class="dropdown-menu">
-          <li><a class="nav-link" href="{{ url('/user') }}">List</a></li>
-          <li><a class="nav-link" href="{{ url('/user/create') }}">Tambah Data</a></li>
-        </ul>
-      </li>           
+      </li>
+      <!-- Menu Statistik -->
+      <li>
+        <a href="{{ url('/statistik') }}" class="nav-link">
+          <i class="fas fa-users"></i> <span>Statistik</span>
+        </a>
+      </li>
+
+      <li class="menu-header">Main Feature</li>
+      <li>
+        <a href="{{ url('/profile') }}" class="nav-link">
+          <i class="fas fa-users"></i> <span>Profile</span>
+        </a>
+      </li>
+         
 
     </ul>
   </aside>

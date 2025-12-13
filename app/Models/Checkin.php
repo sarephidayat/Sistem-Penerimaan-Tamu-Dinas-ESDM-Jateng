@@ -41,4 +41,11 @@ class Checkin extends Model
     {
         return $this->belongsTo(MasterStatus::class, 'id_status');
     }
+    // App\Models\Checkin.php
+
+    public function checkout()
+    {
+        return $this->hasOne(Checkout::class, 'checkin_id');
+    }
+
 }

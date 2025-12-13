@@ -7,76 +7,110 @@ use App\Models\Checkin;
 use App\Models\MasterBidang;
 use App\Models\MasterStatus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class CheckinController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(request $request)
     {
-        $checkins = Checkin::with(['bidang', 'status'])
+        $query = Checkin::with(['bidang', 'status']);
+
+        // 🔥 FILTER TANGGAL CHECK-IN
+        if ($request->filled('tanggal_mulai') && $request->filled('tanggal_selesai')) {
+            $query->whereBetween('waktu_masuk', [
+                Carbon::parse($request->tanggal_mulai)->startOfDay(),
+                Carbon::parse($request->tanggal_selesai)->endOfDay()
+            ]);
+        }
+
+        $checkins = $query
             ->orderBy('waktu_masuk', 'desc')
             ->get();
 
         return view('admin/checkin.index', compact('checkins'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function approve($id)
     {
-        $bidang = MasterBidang::all();
-        $status = MasterStatus::all();
+        $checkin = Checkin::findOrFail($id);
 
-        return view('checkin.create', compact('bidang', 'status'));
+        if ($checkin->id_status != 1) {
+            return back()->with('error', 'Status tidak dapat diubah.');
+        }
+
+        $checkin->update([
+            'id_status' => 2 // Disetujui
+        ]);
+
+        return back()->with('success', 'Tamu disetujui.');
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    public function reject($id)
+    {
+        $checkin = Checkin::findOrFail($id);
+
+        if ($checkin->id_status != 1) {
+            return back()->with('error', 'Status tidak dapat diubah.');
+        }
+
+        $checkin->update([
+            'id_status' => 3 // Ditolak
+        ]);
+
+        return back()->with('success', 'Tamu ditolak.');
+    }
+
     public function store(Request $request)
     {
         $request->validate([
             'nama_lengkap' => 'required|string|max:255',
             'nik' => 'required|string|max:20',
             'email' => 'nullable|email',
-            'instansi' => 'nullable|string',
             'no_hp' => 'nullable|string|max:20',
-            'bidang_tujuan' => 'nullable|string|max:255',
+            'instansi' => 'nullable|string|max:255',
+            'id_bidang' => 'required|exists:master_bidang,id',
             'keperluan' => 'nullable|string',
-            'id_bidang' => 'nullable|exists:master_bidang,id',
-            'id_status' => 'nullable|exists:status,id',
-            'foto_selfie' => 'nullable|image|max:2048',
+            'foto_selfie' => 'nullable|string', // BASE64
         ]);
 
-        // Upload foto
-        $foto = null;
-        if ($request->hasFile('foto_selfie')) {
-            $foto = $request->file('foto_selfie')->store('checkin_foto', 'public');
+        $fotoPath = null;
+
+        if ($request->foto_selfie) {
+            $image = $request->foto_selfie;
+            $image = preg_replace('/^data:image\/\w+;base64,/', '', $image);
+            $image = str_replace(' ', '+', $image);
+
+            $fileName = 'checkin_' . time() . '.png';
+
+            Storage::disk('public')->put(
+                'checkin/' . $fileName,
+                base64_decode($image)
+            );
+
+            $fotoPath = 'checkin/' . $fileName; // ✅ PATH SAJA
         }
 
         Checkin::create([
-            'email' => $request->email,
             'nama_lengkap' => $request->nama_lengkap,
             'nik' => $request->nik,
-            'instansi' => $request->instansi,
+            'email' => $request->email,
             'no_hp' => $request->no_hp,
-            'bidang_tujuan' => $request->bidang_tujuan,
-            'keperluan' => $request->keperluan,
-            'foto_selfie' => $foto,
-            'waktu_masuk' => now(),
+            'instansi' => $request->instansi,
             'id_bidang' => $request->id_bidang,
-            'id_status' => $request->id_status ?? 1, // default Menunggu
+            'keperluan' => $request->keperluan,
+            'foto_selfie' => $fotoPath, // ✅ BENAR
+            'waktu_masuk' => Carbon::now(),
+            'id_status' => 1,
         ]);
 
-        return redirect()->route('checkin.index')->with('success', 'Check-in berhasil disimpan!');
+        return view('index')->with('success', 'Check-in berhasil. Silakan tunggu persetujuan dari petugas.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         $checkin = Checkin::with(['bidang', 'status'])->findOrFail($id);
@@ -95,51 +129,7 @@ class CheckinController extends Controller
         return view('checkin.edit', compact('checkin', 'bidang', 'status'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        $request->validate([
-            'nama_lengkap' => 'required|string|max:255',
-            'nik' => 'required|string|max:20',
-            'email' => 'nullable|email',
-            'instansi' => 'nullable|string',
-            'no_hp' => 'nullable|string|max:20',
-            'bidang_tujuan' => 'nullable|string|max:255',
-            'keperluan' => 'nullable|string',
-            'id_bidang' => 'nullable|exists:master_bidang,id',
-            'id_status' => 'nullable|exists:status,id',
-            'foto_selfie' => 'nullable|image|max:2048',
-        ]);
 
-        $checkin = Checkin::findOrFail($id);
-
-        // Upload foto baru
-        $foto = $checkin->foto_selfie;
-        if ($request->hasFile('foto_selfie')) {
-            $foto = $request->file('foto_selfie')->store('checkin_foto', 'public');
-        }
-
-        $checkin->update([
-            'email' => $request->email,
-            'nama_lengkap' => $request->nama_lengkap,
-            'nik' => $request->nik,
-            'instansi' => $request->instansi,
-            'no_hp' => $request->no_hp,
-            'bidang_tujuan' => $request->bidang_tujuan,
-            'keperluan' => $request->keperluan,
-            'foto_selfie' => $foto,
-            'id_bidang' => $request->id_bidang,
-            'id_status' => $request->id_status,
-        ]);
-
-        return redirect()->route('checkin.index')->with('success', 'Data check-in berhasil diupdate!');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $checkin = Checkin::findOrFail($id);
@@ -147,5 +137,11 @@ class CheckinController extends Controller
         $checkin->delete();
 
         return redirect()->route('checkin.index')->with('success', 'Data check-in berhasil dihapus!');
+    }
+
+    public function formCheckin()
+    {
+        $bidang = MasterBidang::all();
+        return view('checkin', compact('bidang'));
     }
 }
