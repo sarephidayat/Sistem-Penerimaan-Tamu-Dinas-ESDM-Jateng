@@ -22,6 +22,9 @@ class MasterStatusSeeder extends Seeder
             [
                 'nama_status' => 'Check-out',
             ],
+            [
+                'nama_status' => 'Dijadwalkan',
+            ],
         ]);
     }
 }

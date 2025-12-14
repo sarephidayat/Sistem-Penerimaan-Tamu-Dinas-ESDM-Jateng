@@ -60,6 +60,10 @@
         .checkout {
             background: linear-gradient(135deg, #43e97b, #38f9d7);
         }
+        
+        .pemesanan {
+            background: linear-gradient(135deg, #c61919, #ff0000);
+        }
 
         .logo {
             text-align: center;
@@ -112,10 +116,36 @@
                 </a>
             </div>
 
+            <!-- CHECK OUT -->
+            <div class="col-md-5 mb-4">
+                <a href="{{ url('/form-pemesanan') }}" class="text-decoration-none">
+                    <div class="card-menu pemesanan d-flex align-items-center">
+                        <div>
+                            <i class="fas fa-sign-out-alt"></i>
+                            <div class="card-title">Booking</div>
+                            <div class="card-subtitle">Form Booking</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
         </div>
 
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if (session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil 🎉',
+        text: '{{ session('success') }}',
+        showConfirmButton: true,
+        timer: 3500,
+        timerProgressBar: true
+    });
+</script>
+@endif
 
 </body>
 </html>

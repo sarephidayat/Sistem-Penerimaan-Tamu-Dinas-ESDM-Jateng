@@ -32,6 +32,12 @@
           <i class="fas fa-users"></i> <span>Check-Out</span>
         </a>
       </li>
+      <!-- Menu Checkout -->
+      <li>
+        <a href="{{ url('/pemesanan') }}" class="nav-link">
+          <i class="fas fa-users"></i> <span>Booking Pemesanan</span>
+        </a>
+      </li>
       <!-- Menu Statistik -->
       <li>
         <a href="{{ url('/statistik') }}" class="nav-link">

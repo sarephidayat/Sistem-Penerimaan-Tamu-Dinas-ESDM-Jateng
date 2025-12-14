@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
             UserPegawaiSeeder::class,
             AdminSeeder::class,
             CheckinSeeder::class,
-            CheckoutSeeder::class,
+                // CheckoutSeeder::class,
+            BookingKunjungan::class,
         ]);
     }
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\KadisController;
 use App\Http\Controllers\CheckinController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PemesananController;
 use App\Http\Controllers\StatistikController;
 
 // ===============================Index================================
@@ -22,13 +23,21 @@ Route::get('/form-checkin', [CheckinController::class, 'formCheckin'])
 Route::post('/form-checkin', [CheckinController::class, 'store'])
     ->name('checkin.store');
 
-// ===============================Form Checkin================================
+// ===============================Form Checkout================================
 // FORM CHECKOUT (PUBLIK)
 Route::get('/form-checkout', [CheckoutController::class, 'formCheckout'])
     ->name('form-checkout');
 
 Route::post('/form-checkout', [CheckoutController::class, 'store'])
     ->name('checkout.store');
+
+// ===============================Form Booking================================
+// FORM CHECKOUT (PUBLIK)
+Route::get('/form-pemesanan', [PemesananController::class, 'formCheckout'])
+    ->name('form-pemesanan');
+
+Route::post('/form-pemesanan', [PemesananController::class, 'store'])
+    ->name('pemesanan.store');
 
 
 // ================= KEAMANAN (WAJIB LOGIN) =================
@@ -93,6 +102,18 @@ Route::get('/checkout/export/pdf', [CheckoutController::class, 'exportPdf'])
 Route::get('/profile', [AuthController::class, 'profile'])
     // ->middleware('cekLogin')
     ->name('profile');
+
+
+// ==============================Pemesanan===============================
+Route::get('/pemesanan', [PemesananController::class, 'index'])
+    // ->middleware('cekLogin')
+    ->name('pemesanan.index');
+Route::get('/pemesanan/{id}', [PemesananController::class, 'show'])
+    ->name('pemesanan.show');
+Route::put('/pemesanan/{id}/approve', [PemesananController::class, 'approve'])
+    ->name('pemesanan.approve');
+Route::put('/pemesanan/{id}/reject', [PemesananController::class, 'reject'])
+    ->name('pemesanan.reject');
 
 
 // ===============================Profile Edit================================
