@@ -102,7 +102,9 @@ Route::get('/checkout/export/pdf', [CheckoutController::class, 'exportPdf'])
 Route::get('/profile', [AuthController::class, 'profile'])
     // ->middleware('cekLogin')
     ->name('profile');
-
+// UPLOAD FOTO PROFILE
+Route::post('/profile/upload', [AuthController::class, 'uploadAvatar'])
+    ->name('profile.upload');
 
 // ==============================Pemesanan===============================
 Route::get('/pemesanan', [PemesananController::class, 'index'])

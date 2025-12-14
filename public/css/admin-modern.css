@@ -1,0 +1,271 @@
+/* =========================================================
+   ADMIN MODERN UI - ESDM (FINAL FIXED & STABLE)
+========================================================= */
+
+/* =========================
+   GLOBAL
+========================= */
+body {
+    background: #ffffff !important;
+    font-family: 'Inter', sans-serif;
+}
+
+/* =========================
+   MAIN CONTENT FIX (ANTI KETUTUP NAVBAR)
+========================= */
+.main-content {
+    background: #ffffff;
+    padding: 30px;
+    padding-left: 290px; /* sidebar 260 + gap */
+    padding-top: 110px;  /* navbar aman */
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+}
+
+/* Mobile */
+@media (max-width: 1024px) {
+    .main-content {
+        padding-left: 30px;
+        padding-top: 95px;
+    }
+}
+
+/* =========================
+   RESET BACKGROUND STISLA
+========================= */
+.wrapper,
+.content-wrapper,
+.section {
+    background: #ffffff !important;
+}
+
+/* =========================
+   SECTION HEADER
+========================= */
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #edf0f5;
+}
+
+.section-header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #343a40;
+    margin: 0;
+}
+
+/* =========================
+   DASHBOARD HEADER
+========================= */
+.dashboard-header {
+    background: linear-gradient(135deg, #4e73df, #6f42c1);
+    padding: 26px 30px;
+    border-radius: 16px;
+    color: #ffffff;
+    margin-bottom: 30px;
+    box-shadow: 0 15px 35px rgba(0,0,0,.15);
+}
+
+.dashboard-header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.dashboard-header p {
+    font-size: 14px;
+    opacity: .9;
+    margin: 0;
+}
+
+/* =========================
+   STAT CARD
+========================= */
+.stat-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 22px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    box-shadow: 0 10px 25px rgba(0,0,0,.08);
+    margin-bottom: 24px;
+    transition: .3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 35px rgba(0,0,0,.12);
+}
+
+.stat-card span {
+    font-size: 14px;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.stat-card h3 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* =========================
+   STAT ICON
+========================= */
+.stat-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    box-shadow: 0 12px 25px rgba(0,0,0,.18);
+}
+
+.stat-icon i {
+    font-size: 28px;
+}
+
+/* Gradient */
+.stat-icon.bg-primary {
+    background: linear-gradient(135deg, #4e73df, #224abe);
+}
+
+.stat-icon.bg-danger {
+    background: linear-gradient(135deg, #e74a3b, #c0392b);
+}
+
+.stat-icon.bg-success {
+    background: linear-gradient(135deg, #1cc88a, #13855c);
+}
+
+.stat-icon.bg-info {
+    background: linear-gradient(135deg, #36b9cc, #258391);
+}
+
+/* =========================
+   CARD & TABLE
+========================= */
+.clean-card {
+    background: #ffffff;
+    border-radius: 16px;
+    border: none;
+    box-shadow: 0 12px 30px rgba(0,0,0,.08);
+}
+
+.clean-card .card-header {
+    background: transparent;
+    border-bottom: 1px solid #edf0f5;
+    padding: 20px 25px;
+}
+
+.clean-card .card-body {
+    padding: 25px;
+}
+
+.table thead th {
+    background: #f8f9fc;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #6c757d;
+}
+
+.table-hover tbody tr:hover {
+    background: #f1f4ff;
+}
+
+/* =========================
+   BADGE (OVERRIDE BOOTSTRAP)
+========================= */
+.badge {
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 8px;
+}
+
+.badge-warning { background: #ffa426; color: #fff; }
+.badge-primary { background: #4e73df; color: #fff; }
+.badge-danger  { background: #e74a3b; color: #fff; }
+.badge-success { background: #1cc88a; color: #fff; }
+
+/* =========================
+   SIDEBAR
+========================= */
+.main-sidebar {
+    background: #ffffff;
+    width: 260px;
+    box-shadow: 4px 0 20px rgba(0,0,0,.08);
+    z-index: 10;
+}
+
+.sidebar-menu li a {
+    border-radius: 12px;
+}
+
+.sidebar-menu li.active > a {
+    background: linear-gradient(135deg, #4e73df, #6f42c1);
+    color: #ffffff !important;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+.navbar,
+.main-navbar,
+.navbar-bg {
+    background: linear-gradient(135deg, #4e73df, #6f42c1) !important;
+}
+
+.navbar .nav-link {
+    color: #ffffff !important;
+    font-weight: 600;
+}
+
+.navbar-bg {
+    box-shadow: none !important;
+}
+
+/* =========================
+   PROFILE AVATAR (FIXED)
+========================= */
+.profile-avatar {
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 10px;
+    padding: 6px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4e73df, #6f42c1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    background: #ffffff;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+    .stat-icon {
+        width: 56px;
+        height: 56px;
+    }
+
+    .stat-icon i {
+        font-size: 24px;
+    }
+}

@@ -1,71 +1,102 @@
 @extends('admin/layout.main')
 
-@section('title', 'List profile')
+@section('title', 'Profile')
 
 @section('content')
 <section class="section">
-  <div class="section-header d-flex justify-content-between">
-    <h1>List profile</h1>
-    <a href="{{ url('/profile/create') }}" class="btn btn-primary">Tambah Data</a>
-  </div>
 
-  <div class="row">
+    {{-- ================= HEADER ================= --}}
+    <div class="section-header">
+        <h1>Profile</h1>
+        <a href="{{ url('/profile/create') }}" class="btn btn-primary">
+            <i class="fas fa-plus mr-1"></i> Tambah Data
+        </a>
+    </div>
+
+    <div class="row">
+
         {{-- ================= PROFILE CARD ================= --}}
-        <div class="col-lg-6 col-md-12 col-12">
-            <div class="card">
-                <div class="card-header justify-content-center">
-                    <h4 style="color:#5c3d2e;">Profile</h4>
-                </div>
+        <div class="col-lg-4 col-md-12 mb-4">
+            <div class="clean-card h-100">
+                <div class="card-body text-center">
 
-                <div class="card-body">
-                    <div class="text-center mb-4">
-                        <img src="{{ asset('assets/img/avatar/avatar-1.png') }}"
-                             alt="Admin Avatar"
-                             class="rounded-circle"
-                             width="100"
-                             height="100">
+                    {{-- AVATAR + UPLOAD --}}
+                    <div class="profile-avatar mb-3 position-relative">
 
-                        <h5 class="mt-3 mb-1">
-                            {{ session('login')->nama ?? 'Administrator' }}
-                        </h5>
-                        <p class="text-muted">Super Admin</p>
+                        <img
+                            src="{{ session('login')->photo
+                                    ? asset('storage/profile/' . session('login')->photo)
+                                    : asset('img/avatar/avatar-1.jpeg') }}"
+                            alt="Avatar"
+                            id="preview-avatar">
+
+                        {{-- BUTTON CAMERA --}}
+                        <label for="photo"
+                               class="btn btn-primary btn-sm position-absolute"
+                               style="bottom:12px; right:12px; border-radius:50%;">
+                            <i class="fas fa-camera"></i>
+                        </label>
+
                     </div>
 
-                    <div class="row">
-                        <div class="col-sm-4"><strong>Nama Lengkap</strong></div>
-                        <div class="col-sm-8 text-muted">
-                            Admin Dinas ESDM Jawa Tengah
+                    {{-- FORM UPLOAD (AUTO SUBMIT) --}}
+                    <form action="{{ route('profile.upload') }}"
+                          method="POST"
+                          enctype="multipart/form-data">
+                        @csrf
+                        <input type="file"
+                               name="photo"
+                               id="photo"
+                               class="d-none"
+                               accept="image/*"
+                               onchange="previewImage(this); this.form.submit();">
+                    </form>
+
+                    <h5 class="mb-0 font-weight-bold mt-3">
+                        {{ session('login')->nama ?? 'Administrator' }}
+                    </h5>
+
+                    <small class="text-muted d-block mb-4">
+                        Super Admin
+                    </small>
+
+                    <div class="profile-info text-left">
+
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-user text-primary mr-3"></i>
+                            <div>
+                                <small class="text-muted">Username</small>
+                                <div class="font-weight-semibold">
+                                    {{ session('login')->username ?? '-' }}
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <hr>
 
-                    <div class="row">
-                        <div class="col-sm-4"><strong>Username</strong></div>
-                        <div class="col-sm-8 text-muted">
-                            {{ session('login')->username ?? '-' }}
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-user-shield text-danger mr-3"></i>
+                            <div>
+                                <small class="text-muted">Role</small>
+                                <div>
+                                    <span class="badge badge-danger">Admin</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <hr>
 
-                    <div class="row">
-                        <div class="col-sm-4"><strong>Role</strong></div>
-                        <div class="col-sm-8">
-                            <span class="badge badge-danger">Admin</span>
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-clock text-info mr-3"></i>
+                            <div>
+                                <small class="text-muted">Last Login</small>
+                                <div class="text-muted">
+                                    {{ now()->format('d F Y, H:i') }}
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <hr>
 
-                    <div class="row">
-                        <div class="col-sm-4"><strong>Last Login</strong></div>
-                        <div class="col-sm-8 text-muted">
-                            {{ now()->format('d F Y, H:i') }}
-                        </div>
                     </div>
-                    <hr>
 
-                    <div class="text-center mt-4">
-                        <a href="#" class="btn btn-primary">
-                            <i class="fas fa-edit"></i> Ganti Password
+                    <div class="mt-4">
+                        <a href="#" class="btn btn-primary btn-block">
+                            <i class="fas fa-key mr-1"></i> Ganti Password
                         </a>
                     </div>
 
@@ -74,59 +105,81 @@
         </div>
 
         {{-- ================= PETUNJUK ================= --}}
-        <div class="col-lg-6 col-md-12 col-12">
-            <div class="card">
-                <div class="card-header justify-content-center">
-                    <h4 style="color:#5c3d2e;">Petunjuk Penggunaan</h4>
+        <div class="col-lg-8 col-md-12 mb-4">
+            <div class="clean-card h-100">
+                <div class="card-header">
+                    <h4 class="mb-0">
+                        <i class="fas fa-info-circle mr-1"></i> Petunjuk Penggunaan
+                    </h4>
                 </div>
 
                 <div class="card-body">
-                    <p class="text-muted mb-2">
-                        Berikut langkah-langkah untuk mengubah informasi profil Anda:
+
+                    <p class="text-muted mb-4">
+                        Berikut panduan singkat untuk mengelola data profil Anda dengan benar:
                     </p>
 
-                    <ol class="pl-3" style="line-height:1.8;">
-                        <li>Klik tombol <strong>Edit Profile</strong></li>
-                        <li>Ubah data yang ingin diperbarui (nama, email, atau foto).</li>
-                        <li>Tekan tombol <strong>Simpan</strong>.</li>
-                        <li>Logout dan login kembali jika perubahan belum terlihat.</li>
-                    </ol>
+                    <ul class="list-unstyled" style="line-height:2;">
+                        <li class="mb-2">
+                            <i class="fas fa-check-circle text-success mr-2"></i>
+                            Klik menu <strong>Edit Profile</strong>
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-check-circle text-success mr-2"></i>
+                            Perbarui data yang diperlukan
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-check-circle text-success mr-2"></i>
+                            Klik tombol <strong>Simpan</strong>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle text-success mr-2"></i>
+                            Logout & login ulang jika perubahan belum tampil
+                        </li>
+                    </ul>
 
-                    <div class="text-right mt-4">
-                        <a href="#" class="btn btn-primary disabled">
-                            <i class="fas fa-edit"></i> Ganti Password
-                    </div>
                 </div>
             </div>
         </div>
+
     </div>
 </section>
 @endsection
 
 @section('scripts')
+{{-- PREVIEW IMAGE --}}
+<script>
+function previewImage(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            document.getElementById('preview-avatar').src = e.target.result;
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
+
+{{-- NOTIFICATION --}}
 @if(session('success'))
 <script>
-  iziToast.success({
+iziToast.success({
     title: 'Sukses',
     message: `{{ session('success') }}`,
     position: 'topCenter',
     timeout: 5000
-  });
+});
 </script>
 @endif
 
 @if(session('error'))
 <script>
-  iziToast.error({
+iziToast.error({
     title: 'Gagal',
     message: `{{ session('error') }}`,
     position: 'topCenter',
     timeout: 5000
-  });
+});
 </script>
 @endif
-
-
-
-<script src="{{ asset('assets/js/page/modules-datatables.js') }}"></script>
 @endsection

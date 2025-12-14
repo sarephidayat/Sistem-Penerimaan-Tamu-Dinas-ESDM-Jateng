@@ -1,94 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Login &mdash; UIN WS</title>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <title>Login &mdash; DINAS ESDM JAWA TENGAH</title>
 
-  <!-- General CSS Files -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <!-- Bootstrap & Icons -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
 
-  <!-- CSS Libraries -->
-  <link rel="stylesheet" href="modules/bootstrap-social/bootstrap-social.css">
+    <!-- =========================
+         LOGIN MODERN STYLE
+    ========================== -->
+    <style>
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #4e73df, #6f42c1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+        }
 
-  <!-- Template CSS -->
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/components.css">
+        .login-wrapper {
+            width: 100%;
+            max-width: 420px;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 20px 45px rgba(0,0,0,.2);
+            overflow: hidden;
+        }
+
+        .login-header {
+            text-align: center;
+            padding: 30px 30px 10px;
+        }
+
+        .login-header img {
+            max-width: 220px;
+            margin-bottom: 15px;
+        }
+
+        .login-header h4 {
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: #343a40;
+        }
+
+        .login-header p {
+            font-size: 14px;
+            color: #6c757d;
+        }
+
+        .login-body {
+            padding: 25px 30px 30px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-control {
+            height: 45px;
+            border-radius: 10px;
+        }
+
+        .form-control:focus {
+            border-color: #4e73df;
+            box-shadow: 0 0 0 .2rem rgba(78,115,223,.25);
+        }
+
+        .btn-login {
+            height: 45px;
+            border-radius: 10px;
+            font-weight: 600;
+            background: linear-gradient(135deg, #4e73df, #6f42c1);
+            border: none;
+        }
+
+        .btn-login:hover {
+            opacity: .9;
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #ffffff;
+            opacity: .9;
+        }
+
+        .alert {
+            border-radius: 10px;
+            font-size: 14px;
+        }
+    </style>
 </head>
 
 <body>
-  <div id="app">
-    <section class="section">
-      <div class="container mt-5">
-        <div class="row">
-          <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
-            <div class="login-brand">
-              <img src="img/logo.png" alt="logo" width="300">
-            </div>
 
-            <div class="card card-primary">
-              <div class="card-header">
-                <h4>Login Admin</h4>
-              </div>
+<div class="login-wrapper">
+    <div class="login-card">
 
-              <div class="card-body">
-                <form method="POST" action="{{ url('/login') }}" class="needs-validation" novalidate>
-                @csrf
-                <div class="form-group">
-                  <label for="username">Username</label>
-                  <input id="username" type="text" class="form-control" name="username" required autofocus>
-                </div>
-
-                <div class="form-group">
-                  <label for="password">Password</label>
-                  <input id="password" type="password" class="form-control" name="password" required>
-                </div>
-
-                <div class="form-group">
-                  <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
-                </div>
-              </form>
-
-@if($errors->has('login'))
-  <div class="alert alert-danger mt-3">
-    {{ $errors->first('login') }}
-  </div>
-@endif
-
-                <?php
-                  // var_dump($error);
-                    if(isset($error)) {
-                        echo "<p class='alert alert-danger mt-4'> password/user salah </p>";
-                    }
-                ?>                
-              </div>
-            </div>
-            <div class="simple-footer">
-              UIN WS
-            </div>
-          </div>
+        {{-- HEADER --}}
+        <div class="login-header">
+            <img src="{{ asset('img/logo.png') }}" alt="Logo">
+            <h4>Login Admin</h4>
+            <p>DINAS ESDM JAWA TENGAH</p>
         </div>
-      </div>
-    </section>
-  </div>
 
-  <!-- General JS Scripts -->
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-  <script src="js/stisla.js"></script>
+        {{-- BODY --}}
+        <div class="login-body">
+            <form method="POST" action="{{ url('/login') }}">
+                @csrf
 
-  <!-- JS Libraies -->
+                <div class="form-group">
+                    <label for="username">
+                        <i class="fas fa-user mr-1"></i> Username
+                    </label>
+                    <input id="username"
+                           type="text"
+                           class="form-control"
+                           name="username"
+                           required
+                           autofocus>
+                </div>
 
-  <!-- Template JS File -->
-  <script src="js/scripts.js"></script>
-  <script src="js/custom.js"></script>
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fas fa-lock mr-1"></i> Password
+                    </label>
+                    <input id="password"
+                           type="password"
+                           class="form-control"
+                           name="password"
+                           required>
+                </div>
 
-  <!-- Page Specific JS File -->
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn btn-login btn-block text-white">
+                        <i class="fas fa-sign-in-alt mr-1"></i> Login
+                    </button>
+                </div>
+            </form>
+
+            {{-- ERROR --}}
+            @if($errors->has('login'))
+                <div class="alert alert-danger mt-3">
+                    {{ $errors->first('login') }}
+                </div>
+            @endif
+
+            @if(isset($error))
+                <div class="alert alert-danger mt-3">
+                    Username atau password salah
+                </div>
+            @endif
+        </div>
+    </div>
+
+    {{-- FOOTER --}}
+    <div class="login-footer">
+        DINAS ESDM JAWA TENGAH &copy; 2025
+    </div>
+</div>
+
 </body>
-
 </html>

@@ -1,57 +1,66 @@
 <div class="main-sidebar sidebar-style-2">
   <aside id="sidebar-wrapper">
+
+    {{-- LOGO --}}
     <div class="sidebar-brand">
-      <a href="{{ url('/dashboard') }}">
-        <img src="{{ asset('img/logo.png') }}" alt="logo" width="150">
+      <a href="{{ url('/dashboard') }}" class="d-flex align-items-center">
+        <img src="{{ asset('img/logo.png') }}" width="120">
       </a>
     </div>
+
     <div class="sidebar-brand sidebar-brand-sm">
-      <a href="{{ url('/dashboard') }}">EF</a>
+      <a href="{{ url('/dashboard') }}">ESDM</a>
     </div>
 
+    {{-- MENU --}}
     <ul class="sidebar-menu">
+
       <li class="menu-header">Dashboard</li>
-      <li>
+      <li class="{{ request()->is('dashboard') ? 'active' : '' }}">
         <a class="nav-link" href="{{ url('/dashboard') }}">
-          <i class="fas fa-fire"></i> <span>Home</span>
+          <i class="fas fa-home"></i>
+          <span>Dashboard</span>
         </a>
       </li>
 
       <li class="menu-header">Main Feature</li>
 
-      <!-- Menu Checkin -->
-      <li>
-        <a href="{{ url('/checkin') }}" class="nav-link">
-          <i class="fas fa-columns"></i> <span>Check-In</span>
+      <li class="{{ request()->is('checkin*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ url('/checkin') }}">
+          <i class="fas fa-sign-in-alt"></i>
+          <span>Check-In</span>
         </a>
       </li>
 
-      <!-- Menu Checkout -->
-      <li>
-        <a href="{{ url('/checkout') }}" class="nav-link">
-          <i class="fas fa-users"></i> <span>Check-Out</span>
-        </a>
-      </li>
-      <!-- Menu Checkout -->
-      <li>
-        <a href="{{ url('/pemesanan') }}" class="nav-link">
-          <i class="fas fa-users"></i> <span>Booking Pemesanan</span>
-        </a>
-      </li>
-      <!-- Menu Statistik -->
-      <li>
-        <a href="{{ url('/statistik') }}" class="nav-link">
-          <i class="fas fa-users"></i> <span>Statistik</span>
+      <li class="{{ request()->is('checkout*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ url('/checkout') }}">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Check-Out</span>
         </a>
       </li>
 
-      <li class="menu-header">Main Feature</li>
-      <li>
-        <a href="{{ url('/profile') }}" class="nav-link">
-          <i class="fas fa-users"></i> <span>Profile</span>
+      <li class="{{ request()->is('pemesanan*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ url('/pemesanan') }}">
+          <i class="fas fa-calendar-check"></i>
+          <span>Booking</span>
         </a>
       </li>
-         
+
+      <li class="{{ request()->is('statistik*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ url('/statistik') }}">
+          <i class="fas fa-chart-bar"></i>
+          <span>Statistik</span>
+        </a>
+      </li>
+
+      <li class="menu-header">Account</li>
+
+      <li class="{{ request()->is('profile*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ url('/profile') }}">
+          <i class="fas fa-user"></i>
+          <span>Profile</span>
+        </a>
+      </li>
 
     </ul>
   </aside>
