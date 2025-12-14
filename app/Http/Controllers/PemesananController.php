@@ -17,9 +17,21 @@ class PemesananController extends Controller
      * 1. LIST PEMESANAN (ADMIN)
      * =========================
      */
-    public function index()
+    public function index(Request $request)
     {
-        $pemesanans = Pemesanan::with(['bidang', 'status'])
+        $query = Pemesanan::with(['bidang', 'status']);
+
+        // 🔎 FILTER TANGGAL MULAI
+        if ($request->filled('tanggal_mulai')) {
+            $query->whereDate('tanggal_kunjungan', '>=', $request->tanggal_mulai);
+        }
+
+        // 🔎 FILTER TANGGAL SELESAI
+        if ($request->filled('tanggal_selesai')) {
+            $query->whereDate('tanggal_kunjungan', '<=', $request->tanggal_selesai);
+        }
+
+        $pemesanans = $query
             ->orderBy('tanggal_kunjungan', 'desc')
             ->orderBy('jam_kunjungan', 'asc')
             ->get();
