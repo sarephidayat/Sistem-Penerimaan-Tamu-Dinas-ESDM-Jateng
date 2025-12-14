@@ -2,11 +2,17 @@
   <aside id="sidebar-wrapper">
 
     {{-- LOGO --}}
-    <div class="sidebar-brand">
-      <a href="{{ url('/dashboard') }}" class="d-flex align-items-center">
-        <img src="{{ asset('img/logo.png') }}" width="120">
-      </a>
+   <div class="sidebar-brand">
+  <a href="{{ url('/dashboard') }}" class="d-flex align-items-center gap-2">
+    <img src="{{ asset('img/logo.png') }}" width="38" alt="Logo ESDM">
+
+    <div class="brand-text">
+      <span class="brand-title">DINAS ESDM</span>
+      <small class="brand-subtitle">JAWA TENGAH</small>
     </div>
+  </a>
+</div>
+
 
     <div class="sidebar-brand sidebar-brand-sm">
       <a href="{{ url('/dashboard') }}">ESDM</a>

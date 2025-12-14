@@ -8,7 +8,6 @@
     {{-- ================= HEADER ================= --}}
     <div class="section-header">
         <h1>Profile</h1>
-
     </div>
 
     <div class="row">
@@ -37,7 +36,7 @@
 
                     </div>
 
-                    {{-- FORM UPLOAD (AUTO SUBMIT) --}}
+                    {{-- FORM UPLOAD --}}
                     <form action="{{ route('profile.upload') }}"
                           method="POST"
                           enctype="multipart/form-data">
@@ -92,49 +91,55 @@
 
                     </div>
 
-                    <div class="mt-4">
-                        <a href="#" class="btn btn-primary btn-block">
-                            <i class="fas fa-key mr-1"></i> Ganti Password
-                        </a>
-                    </div>
-
                 </div>
             </div>
         </div>
 
-        {{-- ================= PETUNJUK ================= --}}
+        {{-- ================= FORM GANTI PASSWORD ================= --}}
         <div class="col-lg-8 col-md-12 mb-4">
             <div class="clean-card h-100">
                 <div class="card-header">
                     <h4 class="mb-0">
-                        <i class="fas fa-info-circle mr-1"></i> Petunjuk Penggunaan
+                        <i class="fas fa-key mr-1"></i> Ganti Password
                     </h4>
                 </div>
 
                 <div class="card-body">
 
-                    <p class="text-muted mb-4">
-                        Berikut panduan singkat untuk mengelola data profil Anda dengan benar:
-                    </p>
+                    <form action="{{ route('profile.password') }}" method="POST">
+                        @csrf
 
-                    <ul class="list-unstyled" style="line-height:2;">
-                        <li class="mb-2">
-                            <i class="fas fa-check-circle text-success mr-2"></i>
-                            Klik menu <strong>Edit Profile</strong>
-                        </li>
-                        <li class="mb-2">
-                            <i class="fas fa-check-circle text-success mr-2"></i>
-                            Perbarui data yang diperlukan
-                        </li>
-                        <li class="mb-2">
-                            <i class="fas fa-check-circle text-success mr-2"></i>
-                            Klik tombol <strong>Simpan</strong>
-                        </li>
-                        <li>
-                            <i class="fas fa-check-circle text-success mr-2"></i>
-                            Logout & login ulang jika perubahan belum tampil
-                        </li>
-                    </ul>
+                        <div class="form-group">
+                            <label>Password Lama</label>
+                            <input type="password"
+                                   name="password_lama"
+                                   class="form-control"
+                                   placeholder="Masukkan password lama"
+                                   required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Password Baru</label>
+                            <input type="password"
+                                   name="password_baru"
+                                   class="form-control"
+                                   placeholder="Masukkan password baru"
+                                   required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Konfirmasi Password Baru</label>
+                            <input type="password"
+                                   name="password_baru_confirmation"
+                                   class="form-control"
+                                   placeholder="Ulangi password baru"
+                                   required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save mr-1"></i> Simpan Password
+                        </button>
+                    </form>
 
                 </div>
             </div>

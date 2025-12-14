@@ -3,20 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Models\Checkin;
-use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class KadisController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $checkins = Checkin::with(['bidang', 'status'])
-            ->orderBy('waktu_masuk', 'desc')
-            ->get();
+        $today = Carbon::today();
 
-        return view('kadis.index', compact('kadis'));
+        $totalTamu = Checkin::count();
+        $tamuHariIni = Checkin::whereDate('waktu_masuk', $today)->count();
+        $tamuBulanIni = Checkin::whereMonth('waktu_masuk', now()->month)
+                                ->whereYear('waktu_masuk', now()->year)
+                                ->count();
+
+        $kunjunganHariIni = Checkin::whereDate('waktu_masuk', $today)
+                                    ->orderBy('waktu_masuk', 'desc')
+                                    ->take(5)
+                                    ->get();
+
+        return view('kadis.index', compact(
+            'totalTamu',
+            'tamuHariIni',
+            'tamuBulanIni',
+            'kunjunganHariIni'
+        ));
     }
-
 }

@@ -121,10 +121,23 @@
     </div>
     
     <div class="relative z-10 max-w-7xl mx-auto p-5 sm:p-6 lg:p-8">
-        <!-- Header -->
-        <header class="glass-card rounded-2xl shadow-sm border border-white/20 p-5 mb-6 transition-all duration-300 hover:shadow-lg">
-            <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
-                <div class="flex items-center gap-3">
+       <!-- Navbar -->
+<div class="navbar">
+    <div class="navbar-logo" style="margin-left: 50px">
+        <img src="{{asset('storage/img/logo-jateng.jpg')}}" alt="Logo DPU" style="width: 50px; height: 50px;margin-left: 20px;">
+        <div >
+            <h1 style="color: #1a56a7; font-weight: 600; font-size: 18;">Dinas PU Bina Marga dan Cipta Karya</h1>
+            <p></p>
+        </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 10px; margin-right: 200px;">
+        <nav class="navbar-menu" style="display: flex; align-items: center; gap: 10px;">
+            <a href="{{url('/')}}" class="nav-link active"> Beranda</a>
+            <a href="{{url('/maps')}}" class="nav-link"> Peta</a>
+        </nav>
+    </div>
+</div>
+
                     <!-- <span class="text-3xl animate-pulse-custom">⚡</span> -->
                     <h1 class="text-lg sm:text-2xl font-bold gradient-text-primary">
                         Dashboard Kunjungan Tamu Dinas ESDM
@@ -304,12 +317,64 @@
             </div>
         </div>
         
-        <!-- Footer -->
-        <footer class="glass-card rounded-2xl shadow-sm border border-white/20 p-6 mt-6 text-center">
-            <p class="font-bold text-gray-700">© 2025 Dinas PU Bina Marga dan Cipta Karya</p>
-            <p class="text-sm text-gray-500 mt-2 opacity-80">Dikembangkan oleh alibutung</p>
-        </footer>
-    </div>
+       <!-- Footer -->
+
+    <footer class="bg-gray-800 text-white pt-12 pb-6">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <img src="{{asset('storage/img/logo-jateng.jpg')}}" alt="" >
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Dinas PU Bina Marga dan Cipta Karya</h3>
+                    <p class="text-gray-400">Membangun infrastruktur jalan yang berkualitas untuk meningkatkan konektivitas dan kesejahteraan masyarakat.</p>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Tautan Cepat</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Beranda</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Peta Kegiatan</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Chart Agenda</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Agenda Kegiatan Eksternal</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Agenda Kegiatan Internal</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Kontak Kami</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3"></i>
+                            <span>Jl. Madukoro Blok AA-BB, Tawangmas, Kec. Semarang Barat, Kota Semarang, Jawa Tengah 50144</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3"></i>
+                            <span> (024) 7613185</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-clock mr-3"></i>
+                            <span>Senin-Jumat: 07.00-16.00 WIB</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 pt-6 flex flex-col md:flex-row justify-between items-center">
+                <small><p class="text-gray-400 text-sm mb-4 md:mb-0">© 2025 Dinas PU Bina Marga dan Cipta Karya. Seluruh hak cipta dilindungi.</p></small>
+                <small><p>Kebijakan Privasi Syarat & Ketentuan Peta Situs</p></small>
+            </div>
+        </div>
+    </footer>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>

@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -99,12 +100,16 @@ Route::get('/checkout/export/pdf', [CheckoutController::class, 'exportPdf'])
     ->name('checkout.export.pdf');
 
 // ===============================Profile================================
-Route::get('/profile', [AuthController::class, 'profile'])
-    // ->middleware('cekLogin')
-    ->name('profile');
-// UPLOAD FOTO PROFILE
-Route::post('/profile/upload', [AuthController::class, 'uploadAvatar'])
-    ->name('profile.upload');
+ Route::get('/profile', [ProfileController::class, 'index'])
+        ->name('profile');
+
+    // upload avatar
+    Route::post('/profile/upload', [ProfileController::class, 'uploadAvatar'])
+        ->name('profile.upload');
+
+    // 🔐 ganti password
+    Route::post('/profile/password', [AuthController::class, 'updatePassword'])
+        ->name('profile.password');
 
 // ==============================Pemesanan===============================
 Route::get('/pemesanan', [PemesananController::class, 'index'])
@@ -139,5 +144,3 @@ Route::get('/kepala-dinas', [KadisController::class, 'index'])
 
 Route::get('/api/chart-tren-kunjungan', [ChartController::class, 'GrafikTrenKunjungan']);
 Route::get('/chart-agenda-mingguan', [ChartController::class, 'chartAgendaMingguan']);
-
-

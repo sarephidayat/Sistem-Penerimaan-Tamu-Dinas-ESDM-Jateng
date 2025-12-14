@@ -85,8 +85,42 @@ class AuthController extends Controller
         $user->photo = $filename;
         session(['login' => $user]);
 
-        /* WAJIB REDIRECT */
         return redirect()->route('profile')
             ->with('success', 'Foto profile berhasil diperbarui');
+    }
+
+    /* =====================
+       🔐 GANTI PASSWORD (BARU)
+    ===================== */
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'password_lama' => 'required',
+            'password_baru' => 'required|min:6|confirmed',
+        ], [
+            'password_baru.confirmed' => 'Konfirmasi password tidak cocok',
+            'password_baru.min' => 'Password minimal 6 karakter',
+        ]);
+
+        $user = session('login');
+        if (!$user) {
+            return redirect('/login');
+        }
+
+        /* CEK PASSWORD LAMA */
+        if (!Hash::check($request->password_lama, $user->password)) {
+            return back()->with('error', 'Password lama salah');
+        }
+
+        /* UPDATE PASSWORD */
+        Admin::where('id', $user->id)->update([
+            'password' => Hash::make($request->password_baru)
+        ]);
+
+        /* UPDATE SESSION */
+        $user->password = Hash::make($request->password_baru);
+        session(['login' => $user]);
+
+        return back()->with('success', 'Password berhasil diubah');
     }
 }
