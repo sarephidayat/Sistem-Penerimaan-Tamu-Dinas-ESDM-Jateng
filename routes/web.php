@@ -11,6 +11,8 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PemesananController;
 use App\Http\Controllers\StatistikController;
+use App\Http\Controllers\ProfileController;
+
 
 // ===============================Index================================
 Route::get('/', function () {
@@ -73,7 +75,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 
 // ===============================Checkin================================
 Route::get('/checkin', [CheckinController::class, 'index'])
-    // ->middleware('cekLogin')
+    ->middleware('cekLogin')
     ->name('checkin');
 
 Route::put('/checkin/{id}/approve', [CheckinController::class, 'approve'])

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Kunjungan Tamu Dinas ESDM</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script>
         tailwind.config = {
             theme: {
@@ -18,6 +19,7 @@
         }
     </script>
     <style>
+        /* Gaya dari kode asli */
         @keyframes pulse {
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.8; transform: scale(1.1); }
@@ -112,49 +114,68 @@
             font-size: 12px;
             color: #5f6368;
         }
+        
+        /* Gaya tambahan untuk Navbar yang baru */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-link {
+            padding: 0.5rem 1rem;
+            color: #4b5563; /* text-gray-600 */
+            font-weight: 500; /* font-medium */
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #1a73e8; /* primary color */
+        }
+
+        .nav-link.active {
+            color: #1a73e8;
+            border-bottom: 2px solid #1a73e8;
+        }
     </style>
 </head>
 <body class="bg-white min-h-screen">
-    <!-- Subtle background gradient overlay -->
     <div class="fixed inset-0 pointer-events-none z-0">
         <div class="absolute inset-0 bg-gradient-radial from-indigo-50/30 via-transparent to-transparent"></div>
     </div>
     
-    <div class="relative z-10 max-w-7xl mx-auto p-5 sm:p-6 lg:p-8">
-       <!-- Navbar -->
-<div class="navbar">
-    <div class="navbar-logo" style="margin-left: 50px">
-        <img src="{{asset('storage/img/logo-jateng.jpg')}}" alt="Logo DPU" style="width: 50px; height: 50px;margin-left: 20px;">
-        <div >
-            <h1 style="color: #1a56a7; font-weight: 600; font-size: 18;">Dinas PU Bina Marga dan Cipta Karya</h1>
-            <p></p>
+    <div class="navbar sticky top-0 z-50">
+        <div class="navbar-logo" style="margin-left: 50px">
+            <img src="./img/logo.png" alt="Logo DPU" style="width: 50px; height: 50px; margin-left: 20px;">
+            <div>
+                <h1 style="color: #1a56a7; font-weight: 600; font-size: 18px;"> Dinas Energi dan Sumber Daya Mineral Provinsi Jawa Tengah</h1>
+                </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px; margin-right: 50px;">
+            <nav class="navbar-menu" style="display: flex; align-items: center; gap: 10px;">
+                <a href="{{url('/')}}" class="nav-link active"> Beranda</a>
+                <a href="{{url('/maps')}}" class="nav-link"> Peta</a>
+            </nav>
+            <div class="flex items-center gap-3 px-4 py-2 bg-blue-50/50 rounded-full hover:bg-blue-100/50 transition-all duration-300 hover:-translate-y-0.5">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold shadow-lg">
+                    KD
+                </div>
+                <span class="font-semibold text-gray-700">Kepala Dinas</span>
+            </div>
         </div>
     </div>
-    <div style="display: flex; align-items: center; gap: 10px; margin-right: 200px;">
-        <nav class="navbar-menu" style="display: flex; align-items: center; gap: 10px;">
-            <a href="{{url('/')}}" class="nav-link active"> Beranda</a>
-            <a href="{{url('/maps')}}" class="nav-link"> Peta</a>
-        </nav>
-    </div>
-</div>
-
-                    <!-- <span class="text-3xl animate-pulse-custom">⚡</span> -->
-                    <h1 class="text-lg sm:text-2xl font-bold gradient-text-primary">
-                        Dashboard Kunjungan Tamu Dinas ESDM
-                    </h1>
-                </div>
-                <div class="flex items-center gap-3 px-4 py-2 bg-blue-50/50 rounded-full hover:bg-blue-100/50 transition-all duration-300 hover:-translate-y-0.5">
-                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold shadow-lg">
-                        KD
-                    </div>
-                    <span class="font-semibold text-gray-700">Kepala Dinas</span>
-                </div>
-            </div>
-        </header>
+    <div class="relative z-10 max-w-7xl mx-auto p-5 sm:p-6 lg:p-8">
         
-        <!-- Stats Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
-            <!-- Card 1 -->
             <div class="glass-card rounded-2xl shadow-sm border border-white/20 p-6 text-center relative overflow-hidden group hover:-translate-y-2 hover:shadow-xl transition-all duration-300">
                 <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-purple-600"></div>
                 <div class="shimmer-effect"></div>
@@ -162,7 +183,6 @@
                 <div class="text-sm font-semibold text-gray-600 uppercase tracking-wide">Total Tamu di Kantor</div>
             </div>
             
-            <!-- Card 2 -->
             <div class="glass-card rounded-2xl shadow-sm border border-white/20 p-6 text-center relative overflow-hidden group hover:-translate-y-2 hover:shadow-xl transition-all duration-300">
                 <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-pink-400 to-red-500"></div>
                 <div class="shimmer-effect"></div>
@@ -170,7 +190,6 @@
                 <div class="text-sm font-semibold text-gray-600 uppercase tracking-wide">Total Tamu Hari Ini</div>
             </div>
             
-            <!-- Card 3 -->
             <div class="glass-card rounded-2xl shadow-sm border border-white/20 p-6 text-center relative overflow-hidden group hover:-translate-y-2 hover:shadow-xl transition-all duration-300">
                 <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 to-blue-500"></div>
                 <div class="shimmer-effect"></div>
@@ -179,11 +198,8 @@
             </div>
         </div>
         
-        <!-- Main Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
-            <!-- Main Content (2/3) -->
             <div class="lg:col-span-2 space-y-5">
-                <!-- Kunjungan Hari Ini -->
                 <div class="glass-card rounded-2xl shadow-sm border border-white/20 p-6 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
                     <div class="flex justify-between items-center pb-4 mb-5 border-b-2 border-indigo-100">
                         <h2 class="text-base font-bold gradient-text-primary uppercase tracking-wide">Kunjungan Hari Ini</h2>
@@ -207,7 +223,6 @@
                     </div>
                 </div>
                 
-                <!-- Pesanan Kunjungan -->
                 <div class="glass-card rounded-2xl shadow-sm border border-white/20 p-6 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
                     <div class="flex justify-between items-center pb-4 mb-5 border-b-2 border-indigo-100">
                         <h2 class="text-base font-bold gradient-text-primary uppercase tracking-wide">Pesanan Kunjungan</h2>
@@ -226,10 +241,9 @@
                     </div>
                 </div>
                 
-                <!-- Info Dinas -->
                 <div class="glass-card rounded-2xl shadow-sm border border-white/20 p-6 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
                     <div class="flex justify-between items-center pb-4 mb-5 border-b-2 border-indigo-100">
-                        <h2 class="text-base font-bold gradient-text-primary uppercase tracking-wide">Dinas PU Bina Marga dan Cipta Karya</h2>
+                        <h2 class="text-base font-bold gradient-text-primary uppercase tracking-wide">Dinas Energi dan Sumber Daya Mineral Provinsi Jawa Tengah</h2>
                     </div>
                     <p class="text-gray-700 leading-relaxed mb-5">
                         Membangun infrastruktur jalan yang berkualitas untuk meningkatkan konektivitas dan transportasi masyarakat.
@@ -251,39 +265,25 @@
                 </div>
             </div>
             
-            <!-- Sidebar (1/3) -->
             <div class="space-y-5">
-                <!-- Grafik Tren -->
-                <div class="glass-card rounded-2xl shadow-sm border border-white/20 p-6 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-                    <div class="flex justify-between items-center pb-4 mb-5 border-b-2 border-indigo-100">
-                        <h2 class="text-sm font-bold gradient-text-primary uppercase tracking-wide">Grafik Tren Kunjungan</h2>
-                    </div>
-                    <div class="text-sm font-semibold text-gray-600 mb-3">Pilih Tahun: 2025</div>
-                    <div class="chart-container">
-                        <div class="chart">
-                            <div class="chart-bar" style="height: 70%;">
-                                <div class="chart-label">Jan</div>
+                @php
+                    $dataBulanan = [20, 16, 24, 14, 30, 18]; // Contoh data acak untuk bar chart
+                    $bulan = ['Jan','Feb','Mar','Apr','Mei','Jun'];
+                @endphp
+
+                <div class="chart glass-card rounded-2xl shadow-sm border border-white/20 p-6">
+                    <h3 class="text-sm font-bold gradient-text-primary uppercase tracking-wide mb-5">Statistik Kunjungan (6 Bulan)</h3>
+                    <div style="display: flex; align-items: flex-end; justify-content: space-around; height: 150px; margin-top: 10px;">
+                        @foreach ($dataBulanan as $i => $total)
+                            @if ($i < 6)
+                            <div class="chart-bar" style="height: {{ $total * 3 }}px; width: 30px; background-color: #1a73e8; border-radius: 4px 4px 0 0; position: relative; transition: height 0.3s ease;" title="Total: {{ $total }}">
+                                <div class="chart-label">{{ $bulan[$i] }}</div>
                             </div>
-                            <div class="chart-bar" style="height: 50%;">
-                                <div class="chart-label">Feb</div>
-                            </div>
-                            <div class="chart-bar" style="height: 80%;">
-                                <div class="chart-label">Mar</div>
-                            </div>
-                            <div class="chart-bar" style="height: 60%;">
-                                <div class="chart-label">Apr</div>
-                            </div>
-                            <div class="chart-bar" style="height: 90%;">
-                                <div class="chart-label">Mei</div>
-                            </div>
-                            <div class="chart-bar" style="height: 40%;">
-                                <div class="chart-label">Jun</div>
-                            </div>
-                        </div>
+                            @endif
+                        @endforeach
                     </div>
                 </div>
-                
-                <!-- Grafik Kunjungan -->
+
                 <div class="glass-card rounded-2xl shadow-sm border border-white/20 p-6 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
                     <div class="flex justify-between items-center pb-4 mb-5 border-b-2 border-indigo-100">
                         <h2 class="text-sm font-bold gradient-text-primary uppercase tracking-wide">Grafik Kunjungan Tamu</h2>
@@ -294,7 +294,6 @@
                     </div>
                 </div>
                 
-                <!-- Kontak -->
                 <div class="glass-card rounded-2xl shadow-sm border border-white/20 p-6 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
                     <div class="flex justify-between items-center pb-4 mb-5 border-b-2 border-indigo-100">
                         <h2 class="text-sm font-bold gradient-text-primary uppercase tracking-wide">Kontak Kami</h2>
@@ -317,16 +316,16 @@
             </div>
         </div>
         
-       <!-- Footer -->
-
+    </div>
+    
     <footer class="bg-gray-800 text-white pt-12 pb-6">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
                 <div>
-                    <img src="{{asset('storage/img/logo-jateng.jpg')}}" alt="" >
+                    <img src="./img/logo.png" alt="Logo Jawa Tengah" >
                 </div>
                 <div>
-                    <h3 class="text-xl font-bold mb-4">Dinas PU Bina Marga dan Cipta Karya</h3>
+                    <h3 class="text-xl font-bold mb-4">Dinas Energi dan Sumber Daya Mineral Provinsi Jawa Tengah</h3>
                     <p class="text-gray-400">Membangun infrastruktur jalan yang berkualitas untuk meningkatkan konektivitas dan kesejahteraan masyarakat.</p>
                     <div class="flex space-x-4 mt-4">
                         <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
@@ -367,30 +366,26 @@
             </div>
             
             <div class="border-t border-gray-700 pt-6 flex flex-col md:flex-row justify-between items-center">
-                <small><p class="text-gray-400 text-sm mb-4 md:mb-0">© 2025 Dinas PU Bina Marga dan Cipta Karya. Seluruh hak cipta dilindungi.</p></small>
-                <small><p>Kebijakan Privasi Syarat & Ketentuan Peta Situs</p></small>
+                <small><p class="text-gray-400 text-sm mb-4 md:mb-0">© 2025 Dinas Energi dan Sumber Daya Mineral Provinsi Jawa Tengah. Seluruh hak cipta dilindungi.</p></small>
+                <small><p class="text-gray-400 text-sm">Kebijakan Privasi | Syarat & Ketentuan | Peta Situs</p></small>
             </div>
         </div>
     </footer>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         // Fungsi untuk mengupdate grafik dengan data acak - TIDAK DIUBAH
         function updateCharts() {
-            const externalBars = document.querySelectorAll('.chart:first-child .chart-bar');
-            const internalBars = document.querySelectorAll('.chart:last-child .chart-bar');
+            // Mengambil elemen chart-bar di dalam .chart yang pertama (statistik 6 bulan)
+            const statBars = document.querySelectorAll('.chart .chart-bar');
             
-            externalBars.forEach(bar => {
+            statBars.forEach(bar => {
+                // Menghasilkan tinggi acak antara 20 dan 90
                 const randomHeight = Math.floor(Math.random() * 70) + 20;
+                // Mengubah style height-nya (diasumsikan dalam satuan persen)
                 bar.style.height = `${randomHeight}%`;
-            });
-            
-            internalBars.forEach(bar => {
-                const randomHeight = Math.floor(Math.random() * 50) + 10;
-                bar.style.height = `${randomHeight}%`;
+                // Memperbarui title/tooltip untuk menunjukkan nilai acak yang baru
+                const randomValue = Math.floor(randomHeight / 3); // Skala balik sederhana
+                bar.setAttribute('title', `Total: ${randomValue}`);
             });
         }
         
@@ -408,18 +403,18 @@
                         label: 'Kunjungan Tamu 2025',
                         data: [10, 8, 12, 7, 15, 9, 6, 11, 8, 10, 7, 14],
                         backgroundColor: [
-                            'rgba(147, 197, 253, 0.7)',  // January - Blue
-                            'rgba(251, 207, 232, 0.7)',  // February - Pink
-                            'rgba(253, 186, 116, 0.7)',  // March - Orange
-                            'rgba(254, 240, 138, 0.7)',  // April - Yellow
-                            'rgba(167, 243, 208, 0.7)',  // May - Mint
-                            'rgba(196, 181, 253, 0.7)',  // June - Purple
-                            'rgba(203, 213, 225, 0.7)',  // July - Gray
-                            'rgba(147, 197, 253, 0.7)',  // August - Blue
-                            'rgba(251, 207, 232, 0.7)',  // September - Pink
-                            'rgba(253, 186, 116, 0.7)',  // October - Orange
-                            'rgba(254, 240, 138, 0.7)',  // November - Yellow
-                            'rgba(167, 243, 208, 0.7)',  // December - Mint
+                            'rgba(147, 197, 253, 0.7)', 
+                            'rgba(251, 207, 232, 0.7)', 
+                            'rgba(253, 186, 116, 0.7)', 
+                            'rgba(254, 240, 138, 0.7)', 
+                            'rgba(167, 243, 208, 0.7)', 
+                            'rgba(196, 181, 253, 0.7)', 
+                            'rgba(203, 213, 225, 0.7)', 
+                            'rgba(147, 197, 253, 0.7)', 
+                            'rgba(251, 207, 232, 0.7)', 
+                            'rgba(253, 186, 116, 0.7)', 
+                            'rgba(254, 240, 138, 0.7)', 
+                            'rgba(167, 243, 208, 0.7)', 
                         ],
                         borderWidth: 2,
                         borderColor: [
