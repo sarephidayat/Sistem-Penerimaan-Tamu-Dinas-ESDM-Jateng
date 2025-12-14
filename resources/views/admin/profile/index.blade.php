@@ -8,9 +8,7 @@
     {{-- ================= HEADER ================= --}}
     <div class="section-header">
         <h1>Profile</h1>
-        <a href="{{ url('/profile/create') }}" class="btn btn-primary">
-            <i class="fas fa-plus mr-1"></i> Tambah Data
-        </a>
+
     </div>
 
     <div class="row">

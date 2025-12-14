@@ -16,7 +16,7 @@ class KadisController extends Controller
             ->orderBy('waktu_masuk', 'desc')
             ->get();
 
-        return view('Kepala Dinas.index', compact('checkins'));
+        return view('kadis.index', compact('kadis'));
     }
 
 }

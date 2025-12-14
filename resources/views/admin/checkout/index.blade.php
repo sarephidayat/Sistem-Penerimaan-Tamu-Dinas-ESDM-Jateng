@@ -8,9 +8,6 @@
     {{-- HEADER --}}
     <div class="section-header d-flex justify-content-between align-items-center">
         <h1 class="mb-0">List Check-Out</h1>
-        <a href="{{ url('/checkout/create') }}" class="btn btn-primary btn-icon">
-            <i class="fas fa-plus mr-1"></i> Tambah Data
-        </a>
     </div>
 
     <div class="row">
@@ -68,19 +65,20 @@
 
                         <table class="table table-hover table-striped w-100" id="table-1">
                             <thead class="thead-light text-center">
+                                
                                 <tr>
-                                    <th>No</th>
-                                    <th>Nama</th>
-                                    <th>Email</th>
-                                    <th>NIK</th>
-                                    <th>Instansi</th>
-                                    <th>No HP</th>
-                                    <th>Bidang Tujuan</th>
-                                    <th>Keperluan</th>
-                                    <th>Foto</th>
-                                    <th>Waktu Check-In</th>
-                                    <th>Waktu Check-Out</th>
-                                    <th>Catatan</th>
+                                    <th style="width:50px;">No</th>
+                                    <th style="width:160px;">Nama</th>
+                                    <th style="width:180px;">Email</th>
+                                    <th style="width:140px;">NIK</th>
+                                    <th style="width:160px;">Instansi</th>
+                                    <th style="width:130px;">No HP</th>
+                                    <th style="width:160px;">Bidang</th>
+                                    <th style="width:220px;">Keperluan</th>
+                                    <th style="width:200px;">Foto</th>
+                                    <th style="width:170px;">Check-In</th>
+                                    <th style="width:170px;">Check-Out</th>
+                                    <th style="width:120px;">Catatan</th>
                                 </tr>
                             </thead>
 
@@ -104,15 +102,15 @@
                                     </td>
 
                                     <td class="text-center">
-                                        @if ($item->checkin->foto_selfie)
-                                            <img src="{{ asset('storage/' . $item->checkin->foto_selfie) }}"
-                                                 width="55"
-                                                 class="rounded shadow-sm"
-                                                 alt="Foto">
-                                        @else
-                                            -
-                                        @endif
+                                    <div style="width:120px; height:120px; margin:auto;">
+                                        <img
+                                        src="{{ asset('storage/' . $item->checkin->foto_selfie) }}"
+                                        style="width:100%; height:100%; object-fit:cover;"
+                                        class="img-thumbnail"
+                                        >
+                                    </div>
                                     </td>
+
 
                                     <td class="text-center">
                                         {{ \Carbon\Carbon::parse($item->checkin->waktu_masuk)->format('d-m-Y H:i') }}

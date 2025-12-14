@@ -75,21 +75,22 @@
 
           <thead>
             <tr>
-              <th>No</th>
-              <th>Nama</th>
-              <th>Email</th>
-              <th>NIK</th>
-              <th>Instansi</th>
-              <th>No HP</th>
-              <th>Bidang</th>
-              <th>Keperluan</th>
-              <th>Foto</th>
-              <th class="text-center">Aksi</th>
-              <th>Check-In</th>
-              <th>Check-Out</th>
-              <th>Status</th>
+              <th style="width:50px;">No</th>
+              <th style="width:160px;">Nama</th>
+              <th style="width:180px;">Email</th>
+              <th style="width:140px;">NIK</th>
+              <th style="width:160px;">Instansi</th>
+              <th style="width:130px;">No HP</th>
+              <th style="width:160px;">Bidang</th>
+              <th style="width:220px;">Keperluan</th>
+              <th style="width:200px;">Foto</th>
+              <th style="width:110px;" class="text-center">Aksi</th>
+              <th style="width:170px;">Check-In</th>
+              <th style="width:170px;">Check-Out</th>
+              <th style="width:120px;">Status</th>
             </tr>
           </thead>
+
 
           <tbody>
             @foreach ($tamu_hari_ini as $no => $tamu)
@@ -103,17 +104,17 @@
               <td>{{ $tamu->bidang->nama_bidang ?? '-' }}</td>
               <td>{{ \Illuminate\Support\Str::limit($tamu->keperluan, 40) }}</td>
 
-              <td>
-                @if ($tamu->foto_selfie)
+              <td class="text-center">
+                <div style="width:120px; height:120px; margin:auto;">
                   <img
                     src="{{ asset('storage/' . $tamu->foto_selfie) }}"
+                    style="width:100%; height:100%; object-fit:cover;"
                     class="img-thumbnail"
-                    width="90"
                   >
-                @else
-                  -
-                @endif
+                </div>
               </td>
+
+
 
               <td class="text-center">
                 @if ($tamu->id_status == 1)
@@ -147,11 +148,20 @@
                     : '-' }}
               </td>
 
-              <td>
-                <span class="badge badge-{{ strtolower($tamu->status->nama_status) }}">
-                  {{ $tamu->status->nama_status }}
-                </span>
-              </td>
+              <td class="text-center">
+                                        @php
+                                            $badge = match($tamu->id_status) {
+                                                1 => 'warning',
+                                                2 => 'info',
+                                                3 => 'danger',
+                                                4 => 'success',
+                                                default => 'dark'
+                                            };
+                                        @endphp
+                                        <span class="badge badge-{{ $badge }} px-3 py-2">
+                                            {{ $tamu->status->nama_status ?? '-' }}
+                                        </span>
+                                    </td>
 
             </tr>
             @endforeach

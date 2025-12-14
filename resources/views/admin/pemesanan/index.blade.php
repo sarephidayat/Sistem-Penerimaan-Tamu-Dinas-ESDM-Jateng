@@ -8,9 +8,7 @@
     {{-- HEADER --}}
     <div class="section-header d-flex justify-content-between align-items-center">
         <h1 class="mb-0">List Pemesanan</h1>
-        <a href="{{ url('/pemesanan/create') }}" class="btn btn-primary btn-icon">
-            <i class="fas fa-plus mr-1"></i> Tambah Data
-        </a>
+
     </div>
 
     <div class="row">

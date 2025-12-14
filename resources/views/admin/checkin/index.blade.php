@@ -8,9 +8,7 @@
     {{-- HEADER --}}
     <div class="section-header d-flex justify-content-between align-items-center">
         <h1 class="mb-0">List Check-In</h1>
-        <a href="{{ url('/checkin/create') }}" class="btn btn-primary btn-icon">
-            <i class="fas fa-plus mr-1"></i> Tambah Data
-        </a>
+
     </div>
 
     <div class="row">
@@ -75,7 +73,6 @@
                                     <th>Foto</th>
                                     <th>Waktu Check-In</th>
                                     <th>Status</th>
-                                    <th>Detail</th>
                                 </tr>
                             </thead>
 
@@ -126,21 +123,6 @@
                                         </span>
                                     </td>
 
-                                    <td class="text-center">
-                                        <button class="btn btn-sm btn-info btn-detail"
-                                            data-nama="{{ $tamu->nama_lengkap }}"
-                                            data-email="{{ $tamu->email ?? '-' }}"
-                                            data-nik="{{ $tamu->nik }}"
-                                            data-instansi="{{ $tamu->instansi ?? '-' }}"
-                                            data-nohp="{{ $tamu->no_hp ?? '-' }}"
-                                            data-bidang="{{ $tamu->bidang->nama_bidang ?? '-' }}"
-                                            data-keperluan="{{ $tamu->keperluan ?? '-' }}"
-                                            data-masuk="{{ \Carbon\Carbon::parse($tamu->waktu_masuk)->format('d-m-Y H:i') }}"
-                                            data-status="{{ $tamu->status->nama_status ?? '-' }}"
-                                            data-foto="{{ $tamu->foto_selfie ? asset('storage/' . $tamu->foto_selfie) : '-' }}">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
