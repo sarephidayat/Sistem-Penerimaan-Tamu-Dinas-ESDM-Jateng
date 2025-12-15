@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Checkin;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class KadisController extends Controller
 {

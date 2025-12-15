@@ -301,7 +301,7 @@
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
                 <div>
-                    <img src="{{asset('storage/img/logo-jateng.jpg')}}" alt="" >
+                    <img src="./img/logo.png" alt="Logo Jawa Tengah" >
                 </div>
                 <div>
                     <h3 class="text-xl font-bold mb-4">Dinas ESDM Jawa Tengah</h3>
