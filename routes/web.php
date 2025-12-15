@@ -1,4 +1,3 @@
-
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -7,6 +6,7 @@ use App\Http\Controllers\ChartController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\KadisController;
 use App\Http\Controllers\CheckinController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PemesananController;
@@ -68,58 +68,72 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // hanya bisa diakses kalau login
 Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware('cekLogin')
     ->name('dashboard');
 
 
 // ===============================Checkin================================
 Route::get('/checkin', [CheckinController::class, 'index'])
-    // ->middleware('cekLogin')
+    ->middleware('cekLogin')
     ->name('checkin');
 
 Route::put('/checkin/{id}/approve', [CheckinController::class, 'approve'])
+    ->middleware('cekLogin')
     ->name('checkin.approve');
 
 Route::put('/checkin/{id}/reject', [CheckinController::class, 'reject'])
+    ->middleware('cekLogin')
     ->name('checkin.reject');
 
 
 
 // ===============================Statistik================================
 Route::get('/statistik', [StatistikController::class, 'index'])
+    ->middleware('cekLogin')
     // ->middleware('cekLogin')
     ->name('index');
 
 Route::get('/statistik/export/pdf', [StatistikController::class, 'exportPdf'])
+    ->middleware('cekLogin')
     ->name('statistik.export.pdf');
 
 // ===============================Checkout================================
 Route::get('/checkout', [CheckoutController::class, 'index'])
+    ->middleware('cekLogin')
     // ->middleware('cekLogin')
     ->name('checkout');
 Route::get('/checkout/export/pdf', [CheckoutController::class, 'exportPdf'])
+    ->middleware('cekLogin')
     ->name('checkout.export.pdf');
 
 // ===============================Profile================================
- Route::get('/profile', [ProfileController::class, 'index'])
-        ->name('profile');
+Route::get('/profile', [ProfileController::class, 'index'])
+    ->middleware('cekLogin')
+    ->name('profile');
 
-    // upload avatar
-    Route::post('/profile/upload', [ProfileController::class, 'uploadAvatar'])
-        ->name('profile.upload');
+// upload avatar
+Route::post('/profile/upload', [ProfileController::class, 'uploadAvatar'])
+    ->middleware('cekLogin')
+    ->name('profile.upload');
 
-    // 🔐 ganti password
-    Route::post('/profile/password', [AuthController::class, 'updatePassword'])
-        ->name('profile.password');
+// 🔐 ganti password
+Route::post('/profile/password', [AuthController::class, 'updatePassword'])
+    ->middleware('cekLogin')
+    ->name('profile.password');
 
 // ==============================Pemesanan===============================
 Route::get('/pemesanan', [PemesananController::class, 'index'])
+    ->middleware('cekLogin')
     // ->middleware('cekLogin')
     ->name('pemesanan.index');
 Route::get('/pemesanan/{id}', [PemesananController::class, 'show'])
+    ->middleware('cekLogin')
     ->name('pemesanan.show');
 Route::put('/pemesanan/{id}/approve', [PemesananController::class, 'approve'])
+    ->middleware('cekLogin')
     ->name('pemesanan.approve');
 Route::put('/pemesanan/{id}/reject', [PemesananController::class, 'reject'])
+    ->middleware('cekLogin')
     ->name('pemesanan.reject');
 
 

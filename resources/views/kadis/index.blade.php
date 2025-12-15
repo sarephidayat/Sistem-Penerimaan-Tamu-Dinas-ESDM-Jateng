@@ -3,321 +3,299 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Kunjungan Tamu Dinas ESDM</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#1a73e8',
-                        secondary: '#34a853',
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.1); }
-        }
-        
-        @keyframes countUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes shimmer {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-        
-        .animate-pulse-custom {
-            animation: pulse 2s ease-in-out infinite;
-        }
-        
-        .animate-count-up {
-            animation: countUp 1s ease-out;
-        }
-        
-        .shimmer-effect::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            animation: shimmer 2s infinite;
-        }
-        
-        /* Glass morphism custom */
-        .glass-card {
-            background: rgba(249, 245, 245, 0.62);
-            backdrop-filter: saturate(180%) blur(20px);
-            -webkit-backdrop-filter: saturate(180%) blur(20px);
-        }
-        
-        /* Gradient text */
-        .gradient-text-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .gradient-text-secondary {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .gradient-text-tertiary {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        /* Chart styles - TIDAK DIUBAH */
-        .chart-container {
-            position: relative;
-            height: 200px;
-        }
-        
-        .chart {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-            height: 150px;
-            margin-top: 10px;
-        }
-        
-        .chart-bar {
-            width: 30px;
-            background-color: #1a73e8;
-            border-radius: 4px 4px 0 0;
-            position: relative;
-            transition: height 0.3s ease;
-        }
-        
-        .chart-label {
-            position: absolute;
-            bottom: -25px;
-            left: 0;
-            width: 100%;
-            text-align: center;
-            font-size: 12px;
-            color: #5f6368;
-        }
-    </style>
+    <title>Dashboard Agenda - Kepala Dinas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
+<style>
+    /* =======================
+   TABLE CARD
+======================= */
+.table-card {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    overflow: hidden;
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+
+/* HEADER */
+.table-card-header {
+    padding: 18px 24px;
+    background: linear-gradient(135deg, #1a56a7, #3b82f6);
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.table-card-header h4 {
+    margin: 0;
+    color: #fff;
+    font-weight: 600;
+}
+
+/* BODY */
+.table-card-body {
+    padding: 20px;
+}
+
+
+
+/* =======================
+   TABLE STYLE
+======================= */
+.custom-table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.custom-table thead th {
+    background: #f1f5f9;
+    font-weight: 600;
+    color: #1f2937;
+    border-bottom: 2px solid #e5e7eb;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.custom-table tbody td {
+    vertical-align: middle;
+    font-size: 14px;
+}
+
+.custom-table tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+/* =======================
+   FOTO TAMU
+======================= */
+.foto-wrapper {
+    width: 110px;
+    height: 110px;
+    margin: auto;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.foto-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+</style>
+
 </head>
-<body class="bg-white min-h-screen">
-    <!-- Subtle background gradient overlay -->
-    <div class="fixed inset-0 pointer-events-none z-0">
-        <div class="absolute inset-0 bg-gradient-radial from-indigo-50/30 via-transparent to-transparent"></div>
-    </div>
-    
-    <div class="relative z-10 max-w-7xl mx-auto p-5 sm:p-6 lg:p-8">
-       <!-- Navbar -->
+<body>
+<!-- Navbar -->
 <div class="navbar">
     <div class="navbar-logo" style="margin-left: 50px">
         <img src="{{asset('storage/img/logo-jateng.jpg')}}" alt="Logo DPU" style="width: 50px; height: 50px;margin-left: 20px;">
         <div >
-            <h1 style="color: #1a56a7; font-weight: 600; font-size: 18;">Dinas PU Bina Marga dan Cipta Karya</h1>
+            <h1 style="color: #1a56a7; font-weight: 600; font-size: 18;">Dinas ESDM Jawa Tengah</h1>
             <p></p>
         </div>
     </div>
     <div style="display: flex; align-items: center; gap: 10px; margin-right: 200px;">
         <nav class="navbar-menu" style="display: flex; align-items: center; gap: 10px;">
             <a href="{{url('/')}}" class="nav-link active"> Beranda</a>
-            <a href="{{url('/maps')}}" class="nav-link"> Peta</a>
         </nav>
     </div>
 </div>
 
-                    <!-- <span class="text-3xl animate-pulse-custom">⚡</span> -->
-                    <h1 class="text-lg sm:text-2xl font-bold gradient-text-primary">
-                        Dashboard Kunjungan Tamu Dinas ESDM
-                    </h1>
-                </div>
-                <div class="flex items-center gap-3 px-4 py-2 bg-blue-50/50 rounded-full hover:bg-blue-100/50 transition-all duration-300 hover:-translate-y-0.5">
-                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold shadow-lg">
-                        KD
-                    </div>
-                    <span class="font-semibold text-gray-700">Kepala Dinas</span>
-                </div>
-            </div>
-        </header>
-        
-        <!-- Stats Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
-            <!-- Card 1 -->
-            <div class="glass-card rounded-2xl shadow-sm border border-white/20 p-6 text-center relative overflow-hidden group hover:-translate-y-2 hover:shadow-xl transition-all duration-300">
-                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-purple-600"></div>
-                <div class="shimmer-effect"></div>
-                <div class="text-5xl font-extrabold gradient-text-primary animate-count-up mb-2">32</div>
-                <div class="text-sm font-semibold text-gray-600 uppercase tracking-wide">Total Tamu di Kantor</div>
-            </div>
-            
-            <!-- Card 2 -->
-            <div class="glass-card rounded-2xl shadow-sm border border-white/20 p-6 text-center relative overflow-hidden group hover:-translate-y-2 hover:shadow-xl transition-all duration-300">
-                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-pink-400 to-red-500"></div>
-                <div class="shimmer-effect"></div>
-                <div class="text-5xl font-extrabold gradient-text-secondary animate-count-up mb-2">29</div>
-                <div class="text-sm font-semibold text-gray-600 uppercase tracking-wide">Total Tamu Hari Ini</div>
-            </div>
-            
-            <!-- Card 3 -->
-            <div class="glass-card rounded-2xl shadow-sm border border-white/20 p-6 text-center relative overflow-hidden group hover:-translate-y-2 hover:shadow-xl transition-all duration-300">
-                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 to-blue-500"></div>
-                <div class="shimmer-effect"></div>
-                <div class="text-5xl font-extrabold gradient-text-tertiary animate-count-up mb-2">3</div>
-                <div class="text-sm font-semibold text-gray-600 uppercase tracking-wide">Total Tamu Bulan Ini</div>
+<!-- Main Content -->
+<div class="main-content">
+    <h1 class="dashboard-title" style="font-size: 30px"><b>DASHBOARD KUNJUNGAN TAMU</b></h1>
+    <!-- Statistik -->
+    <div class="stats-container">
+        <div class="stat-card total">
+            <div class="stat-value">{{ $total_tamu_hari_ini }}</div>
+            <div class="stat-label">TOTAL Tamu Hari Ini</div>
+
+        </div>
+        <div class="stat-card hadir">
+            <div class="stat-value">{{ $total_tamu_bulan_ini }}</div>
+            <div class="stat-label">Total Tamu Bulan Ini</div>
+        </div>
+        <div class="stat-card diwakilkan">
+            <div class="stat-value">{{ $total_tamu_minggu_ini }}</div>
+            <div class="stat-label">Total Tamu Minggu Ini</div>
+        </div>
+    </div>
+
+
+    {{-- ================================================================================================= --}}
+    <div class="row">
+    <div class="col-12">
+
+        <div class="table-card">
+
+        <!-- HEADER -->
+        <div class="table-card-header">
+            <h4>Daftar Tamu Hari Ini</h4>
+        </div>
+
+        <!-- BODY -->
+        <div class="table-card-body">
+            <div class="table-responsive">
+
+            <table class="table custom-table w-100">
+                <thead>
+                <tr>
+                    <th style="width:50px;">No</th>
+                    <th style="width:160px;">Nama</th>
+                    {{-- <th style="width:180px;">Email</th> --}}
+                    {{-- <th style="width:140px;">NIK</th> --}}
+                    <th style="width:160px;">Instansi</th>
+                    {{-- <th style="width:130px;">No HP</th> --}}
+                    <th style="width:160px;">Bidang</th>
+                    <th style="width:220px;">Keperluan</th>
+                    <th style="width:150px;" class="text-center">Foto</th>
+                    <th style="width:170px;">Check-In</th>
+                    <th style="width:170px;">Check-Out</th>
+                    <th style="width:120px;" class="text-center">Status</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                @foreach ($tamu_hari_ini as $no => $tamu)
+                <tr>
+                    <td>{{ $no + 1 }}</td>
+                    <td>{{ $tamu->nama_lengkap }}</td>
+                    {{-- <td>{{ $tamu->email ?? '-' }}</td> --}}
+                    {{-- <td>{{ $tamu->nik }}</td> --}}
+                    <td>{{ $tamu->instansi ?? '-' }}</td>
+                    {{-- <td>{{ $tamu->no_hp ?? '-' }}</td> --}}
+                    <td>{{ $tamu->bidang->nama_bidang ?? '-' }}</td>
+                    <td>{{ \Illuminate\Support\Str::limit($tamu->keperluan, 40) }}</td>
+
+                    <!-- FOTO -->
+                    <td class="text-center">
+                    @if ($tamu->foto_selfie)
+                        <div class="foto-wrapper">
+                        <img src="{{ asset('storage/' . $tamu->foto_selfie) }}" alt="Foto Tamu">
+                        </div>
+                    @else
+                        -
+                    @endif
+                    </td>
+
+                    <!-- CHECK-IN -->
+                    <td>
+                    {{ \Carbon\Carbon::parse($tamu->waktu_masuk)->format('d-m-Y H:i') }}
+                    </td>
+
+                    <!-- CHECK-OUT -->
+                    <td>
+                    {{ $tamu->checkout
+                        ? \Carbon\Carbon::parse($tamu->checkout->waktu_keluar)->format('d-m-Y H:i')
+                        : '-' }}
+                    </td>
+
+                    <!-- STATUS -->
+                    <td class="text-center">
+                    @php
+                        $badge = match($tamu->id_status) {
+                        1 => 'warning',
+                        2 => 'info',
+                        3 => 'danger',
+                        4 => 'success',
+                        default => 'dark'
+                        };
+                    @endphp
+                    <span class="badge badge-{{ $badge }} px-3 py-2">
+                        {{ $tamu->status->nama_status ?? '-' }}
+                    </span>
+                    </td>
+                </tr>
+                @endforeach
+                </tbody>
+            </table>
+
             </div>
         </div>
-        
-        <!-- Main Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
-            <!-- Main Content (2/3) -->
-            <div class="lg:col-span-2 space-y-5">
-                <!-- Kunjungan Hari Ini -->
-                <div class="glass-card rounded-2xl shadow-sm border border-white/20 p-6 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-                    <div class="flex justify-between items-center pb-4 mb-5 border-b-2 border-indigo-100">
-                        <h2 class="text-base font-bold gradient-text-primary uppercase tracking-wide">Kunjungan Hari Ini</h2>
-                    </div>
-                    <div class="space-y-3">
-                        <div class="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-r from-indigo-50/50 to-purple-50/50 border-l-4 border-indigo-500 hover:translate-x-2 transition-all duration-300 group relative overflow-hidden">
-                            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                            <span class="px-3 py-1.5 bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-xs font-bold rounded-full shadow-md">EXTERNAL</span>
-                            <span class="text-sm font-medium text-gray-700">Rapat Koordinasi Pembangunan Jalan</span>
-                        </div>
-                        <div class="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-r from-pink-50/50 to-red-50/50 border-l-4 border-pink-500 hover:translate-x-2 transition-all duration-300 group relative overflow-hidden">
-                            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                            <span class="px-3 py-1.5 bg-gradient-to-r from-pink-400 to-red-500 text-white text-xs font-bold rounded-full shadow-md">INTERNAL</span>
-                            <span class="text-sm font-medium text-gray-700">Evaluasi Kinerja Triwulan</span>
-                        </div>
-                        <div class="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-r from-indigo-50/50 to-purple-50/50 border-l-4 border-indigo-500 hover:translate-x-2 transition-all duration-300 group relative overflow-hidden">
-                            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                            <span class="px-3 py-1.5 bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-xs font-bold rounded-full shadow-md">EXTERNAL</span>
-                            <span class="text-sm font-medium text-gray-700">Kunjungan Kerja ke Proyek Jembatan</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Pesanan Kunjungan -->
-                <div class="glass-card rounded-2xl shadow-sm border border-white/20 p-6 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-                    <div class="flex justify-between items-center pb-4 mb-5 border-b-2 border-indigo-100">
-                        <h2 class="text-base font-bold gradient-text-primary uppercase tracking-wide">Pesanan Kunjungan</h2>
-                    </div>
-                    <div class="space-y-3">
-                        <div class="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-r from-indigo-50/50 to-purple-50/50 border-l-4 border-indigo-500 hover:translate-x-2 transition-all duration-300 group relative overflow-hidden">
-                            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                            <span class="px-3 py-1.5 bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-xs font-bold rounded-full shadow-md">EXTERNAL</span>
-                            <span class="text-sm font-medium text-gray-700">Seminar Infrastruktur Berkelanjutan</span>
-                        </div>
-                        <div class="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-r from-pink-50/50 to-red-50/50 border-l-4 border-pink-500 hover:translate-x-2 transition-all duration-300 group relative overflow-hidden">
-                            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                            <span class="px-3 py-1.5 bg-gradient-to-r from-pink-400 to-red-500 text-white text-xs font-bold rounded-full shadow-md">INTERNAL</span>
-                            <span class="text-sm font-medium text-gray-700">Rapat Perencanaan Anggaran</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Info Dinas -->
-                <div class="glass-card rounded-2xl shadow-sm border border-white/20 p-6 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-                    <div class="flex justify-between items-center pb-4 mb-5 border-b-2 border-indigo-100">
-                        <h2 class="text-base font-bold gradient-text-primary uppercase tracking-wide">Dinas PU Bina Marga dan Cipta Karya</h2>
-                    </div>
-                    <p class="text-gray-700 leading-relaxed mb-5">
-                        Membangun infrastruktur jalan yang berkualitas untuk meningkatkan konektivitas dan transportasi masyarakat.
-                    </p>
-                    <div class="flex flex-wrap gap-3">
-                        <button class="px-5 py-2.5 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold rounded-lg shadow-md hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-                            +
-                        </button>
-                        <button class="px-5 py-2.5 bg-indigo-50/80 border-2 border-indigo-200 font-semibold rounded-lg hover:-translate-y-1 hover:shadow-md hover:bg-indigo-100/80 transition-all duration-300">
-                            ✅
-                        </button>
-                        <button class="px-5 py-2.5 bg-indigo-50/80 border-2 border-indigo-200 font-semibold rounded-lg hover:-translate-y-1 hover:shadow-md hover:bg-indigo-100/80 transition-all duration-300">
-                            ⊕
-                        </button>
-                        <button class="px-5 py-2.5 bg-indigo-50/80 border-2 border-indigo-200 font-semibold rounded-lg hover:-translate-y-1 hover:shadow-md hover:bg-indigo-100/80 transition-all duration-300">
-                            ⊕
-                        </button>
-                    </div>
-                </div>
+
+        </div>
+
+    </div>
+    </div>
+
+    <!-- ================= GRAFIK ================= -->
+    <!-- ================= WRAPPER GRAFIK ================= -->
+<div class="chart-wrapper-card mt-5">
+    <!-- HEADER -->
+    <div class="chart-wrapper-header mb-4">
+        <h4 class="mb-0">Statistik Kunjungan</h4>
+    </div>
+    <div class="row"
+     style="
+        background:#ffffff;
+        border-radius:16px;
+        padding:20px;
+        box-shadow:0 12px 30px rgba(0,0,0,0.08);
+     ">
+
+    {{-- ================= MINGGUAN ================= --}}
+    <div class="col-lg-6 col-md-12 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-light">
+                <h6 class="mb-0">Tren Kunjungan Mingguan</h6>
             </div>
-            
-            <!-- Sidebar (1/3) -->
-            <div class="space-y-5">
-                <!-- Grafik Tren -->
-                <div class="glass-card rounded-2xl shadow-sm border border-white/20 p-6 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-                    <div class="flex justify-between items-center pb-4 mb-5 border-b-2 border-indigo-100">
-                        <h2 class="text-sm font-bold gradient-text-primary uppercase tracking-wide">Grafik Tren Kunjungan</h2>
-                    </div>
-                    <div class="text-sm font-semibold text-gray-600 mb-3">Pilih Tahun: 2025</div>
-                    <div class="chart-container">
-                        <div class="chart">
-                            <div class="chart-bar" style="height: 70%;">
-                                <div class="chart-label">Jan</div>
-                            </div>
-                            <div class="chart-bar" style="height: 50%;">
-                                <div class="chart-label">Feb</div>
-                            </div>
-                            <div class="chart-bar" style="height: 80%;">
-                                <div class="chart-label">Mar</div>
-                            </div>
-                            <div class="chart-bar" style="height: 60%;">
-                                <div class="chart-label">Apr</div>
-                            </div>
-                            <div class="chart-bar" style="height: 90%;">
-                                <div class="chart-label">Mei</div>
-                            </div>
-                            <div class="chart-bar" style="height: 40%;">
-                                <div class="chart-label">Jun</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Grafik Kunjungan -->
-                <div class="glass-card rounded-2xl shadow-sm border border-white/20 p-6 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-                    <div class="flex justify-between items-center pb-4 mb-5 border-b-2 border-indigo-100">
-                        <h2 class="text-sm font-bold gradient-text-primary uppercase tracking-wide">Grafik Kunjungan Tamu</h2>
-                    </div>
-                    <div class="text-sm font-semibold text-gray-600 mb-3">Pilih Tahun: 2025</div>
-                    <div class="bg-gradient-to-br from-white/50 to-indigo-50/30 rounded-xl p-4">
-                        <canvas id="GrafikTrenKunjungan" style="max-height: 300px;"></canvas>
-                    </div>
-                </div>
-                
-                <!-- Kontak -->
-                <div class="glass-card rounded-2xl shadow-sm border border-white/20 p-6 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-                    <div class="flex justify-between items-center pb-4 mb-5 border-b-2 border-indigo-100">
-                        <h2 class="text-sm font-bold gradient-text-primary uppercase tracking-wide">Kontak Kami</h2>
-                    </div>
-                    <div class="space-y-3">
-                        <div class="flex items-start gap-3 p-3 bg-indigo-50/50 rounded-lg hover:translate-x-1 hover:bg-indigo-100/50 transition-all duration-300">
-                            <span class="text-xl">📍</span>
-                            <span class="text-sm text-gray-700">Jl. Majapahit No. 123, Jakarta Pusat, DKI Jakarta, 10110</span>
-                        </div>
-                        <div class="flex items-center gap-3 p-3 bg-indigo-50/50 rounded-lg hover:translate-x-1 hover:bg-indigo-100/50 transition-all duration-300">
-                            <span class="text-xl">📞</span>
-                            <span class="text-sm text-gray-700">(021) 753 0158</span>
-                        </div>
-                        <div class="flex items-center gap-3 p-3 bg-indigo-50/50 rounded-lg hover:translate-x-1 hover:bg-indigo-100/50 transition-all duration-300">
-                            <span class="text-xl">🕒</span>
-                            <span class="text-sm text-gray-700">Senin-Jumat: 07.00-16.00 WIB</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="card-body">
+                <canvas id="chartWeek" height="400" width="600"></canvas>
             </div>
         </div>
-        
-       <!-- Footer -->
+    </div>
+
+    {{-- ================= BULANAN ================= --}}
+    <div class="col-lg-6 col-md-12 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-light">
+                <h6 class="mb-0">Tren Kunjungan Bulanan</h6>
+            </div>
+            <div class="card-body">
+                <canvas id="chartMonth" height="400" width="600"></canvas>
+            </div>
+        </div>
+    </div>
+
+    {{-- ================= BIDANG ================= --}}
+    <div class="col-lg-6 col-md-12 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-light">
+                <h6 class="mb-0">Bidang Paling Banyak Dikunjungi</h6>
+            </div>
+            <div class="card-body d-flex justify-content-center align-items-center">
+                <canvas id="chartBidang" height="400" width="600"></canvas>
+            </div>
+        </div>
+    </div>
+
+    {{-- ================= JAM ================= --}}
+    <div class="col-lg-6 col-md-12 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-light">
+                <h6 class="mb-0">Waktu Kunjungan Paling Ramai</h6>
+            </div>
+            <div class="card-body d-flex justify-content-center align-items-center">
+                <canvas id="chartHour" height="400" width="600"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+
+
+
+
+</div>
+
+<!-- Footer -->
 
     <footer class="bg-gray-800 text-white pt-12 pb-6">
         <div class="container mx-auto px-4">
@@ -326,7 +304,7 @@
                     <img src="{{asset('storage/img/logo-jateng.jpg')}}" alt="" >
                 </div>
                 <div>
-                    <h3 class="text-xl font-bold mb-4">Dinas PU Bina Marga dan Cipta Karya</h3>
+                    <h3 class="text-xl font-bold mb-4">Dinas ESDM Jawa Tengah</h3>
                     <p class="text-gray-400">Membangun infrastruktur jalan yang berkualitas untuk meningkatkan konektivitas dan kesejahteraan masyarakat.</p>
                     <div class="flex space-x-4 mt-4">
                         <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
@@ -340,10 +318,8 @@
                     <h4 class="text-lg font-semibold mb-4">Tautan Cepat</h4>
                     <ul class="space-y-2">
                         <li><a href="#" class="text-gray-400 hover:text-white">Beranda</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Peta Kegiatan</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Rekapan Tamu</a></li>
                         <li><a href="#" class="text-gray-400 hover:text-white">Chart Agenda</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Agenda Kegiatan Eksternal</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Agenda Kegiatan Internal</a></li>
                     </ul>
                 </div>
                 
@@ -367,147 +343,71 @@
             </div>
             
             <div class="border-t border-gray-700 pt-6 flex flex-col md:flex-row justify-between items-center">
-                <small><p class="text-gray-400 text-sm mb-4 md:mb-0">© 2025 Dinas PU Bina Marga dan Cipta Karya. Seluruh hak cipta dilindungi.</p></small>
+                <small><p class="text-gray-400 text-sm mb-4 md:mb-0">© 2025 Dinas ESDM Jawa Tengah. Seluruh hak cipta dilindungi.</p></small>
                 <small><p>Kebijakan Privasi Syarat & Ketentuan Peta Situs</p></small>
             </div>
         </div>
     </footer>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="{{ asset('modules/chart.min.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    {{-- ================= CHART SCRIPT ================= --}}
+@section('scripts')
 <script>
-    
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        // Fungsi untuk mengupdate grafik dengan data acak - TIDAK DIUBAH
-        function updateCharts() {
-            const externalBars = document.querySelectorAll('.chart:first-child .chart-bar');
-            const internalBars = document.querySelectorAll('.chart:last-child .chart-bar');
-            
-            externalBars.forEach(bar => {
-                const randomHeight = Math.floor(Math.random() * 70) + 20;
-                bar.style.height = `${randomHeight}%`;
-            });
-            
-            internalBars.forEach(bar => {
-                const randomHeight = Math.floor(Math.random() * 50) + 10;
-                bar.style.height = `${randomHeight}%`;
-            });
-        }
-        
-        // Update grafik setiap 5 detik untuk efek dinamis - TIDAK DIUBAH
-        setInterval(updateCharts, 5000);
-        
-        // Initialize Chart.js untuk Grafik Kunjungan Tamu (Polar Area Chart)
-        const ctx = document.getElementById('GrafikTrenKunjungan');
-        if (ctx) {
-            const polarChart = new Chart(ctx, {
-                type: 'polarArea',
-                data: {
-                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-                    datasets: [{
-                        label: 'Kunjungan Tamu 2025',
-                        data: [10, 8, 12, 7, 15, 9, 6, 11, 8, 10, 7, 14],
-                        backgroundColor: [
-                            'rgba(147, 197, 253, 0.7)',  // January - Blue
-                            'rgba(251, 207, 232, 0.7)',  // February - Pink
-                            'rgba(253, 186, 116, 0.7)',  // March - Orange
-                            'rgba(254, 240, 138, 0.7)',  // April - Yellow
-                            'rgba(167, 243, 208, 0.7)',  // May - Mint
-                            'rgba(196, 181, 253, 0.7)',  // June - Purple
-                            'rgba(203, 213, 225, 0.7)',  // July - Gray
-                            'rgba(147, 197, 253, 0.7)',  // August - Blue
-                            'rgba(251, 207, 232, 0.7)',  // September - Pink
-                            'rgba(253, 186, 116, 0.7)',  // October - Orange
-                            'rgba(254, 240, 138, 0.7)',  // November - Yellow
-                            'rgba(167, 243, 208, 0.7)',  // December - Mint
-                        ],
-                        borderWidth: 2,
-                        borderColor: [
-                            'rgba(59, 130, 246, 1)',
-                            'rgba(236, 72, 153, 1)',
-                            'rgba(251, 146, 60, 1)',
-                            'rgba(250, 204, 21, 1)',
-                            'rgba(52, 211, 153, 1)',
-                            'rgba(139, 92, 246, 1)',
-                            'rgba(148, 163, 184, 1)',
-                            'rgba(59, 130, 246, 1)',
-                            'rgba(236, 72, 153, 1)',
-                            'rgba(251, 146, 60, 1)',
-                            'rgba(250, 204, 21, 1)',
-                            'rgba(52, 211, 153, 1)',
-                        ]
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top',
-                            labels: {
-                                padding: 15,
-                                font: {
-                                    size: 11,
-                                    weight: '600'
-                                },
-                                usePointStyle: true,
-                                pointStyle: 'rectRounded',
-                                generateLabels: function(chart) {
-                                    const data = chart.data;
-                                    if (data.labels.length && data.datasets.length) {
-                                        return data.labels.map((label, i) => {
-                                            const dataset = data.datasets[0];
-                                            return {
-                                                text: label,
-                                                fillStyle: dataset.backgroundColor[i],
-                                                strokeStyle: dataset.borderColor[i],
-                                                lineWidth: 2,
-                                                hidden: false,
-                                                index: i
-                                            };
-                                        });
-                                    }
-                                    return [];
-                                }
-                            }
-                        },
-                        tooltip: {
-                            backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                            titleColor: '#1f2937',
-                            bodyColor: '#1f2937',
-                            borderColor: '#e5e7eb',
-                            borderWidth: 1,
-                            padding: 12,
-                            displayColors: true,
-                            callbacks: {
-                                label: function(context) {
-                                    return context.label + ': ' + context.parsed.r + ' kunjungan';
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        r: {
-                            beginAtZero: true,
-                            ticks: {
-                                stepSize: 2,
-                                font: {
-                                    size: 10
-                                },
-                                backdropColor: 'transparent'
-                            },
-                            grid: {
-                                color: 'rgba(148, 163, 184, 0.2)'
-                            },
-                            pointLabels: {
-                                display: false
-                            }
-                        }
-                    }
-                }
-            });
-        }
-    </script>
+new Chart(chartWeek, {
+    type: 'line',
+    data: {
+        labels: @json($weekLabels),
+        datasets: [{
+            label: 'Kunjungan Mingguan',
+            data: @json($weekData),
+            borderColor: '#6777ef',
+            tension: .4
+        }]
+    },
+    options: { responsive: true, scales: { y: { beginAtZero: true } } }
+});
+
+new Chart(chartMonth, {
+    type: 'bar',
+    data: {
+        labels: @json($monthLabels),
+        datasets: [{
+            label: 'Kunjungan Bulanan',
+            data: @json($monthData),
+            backgroundColor: '#47c363'
+        }]
+    },
+    options: { responsive: true, scales: { y: { beginAtZero: true } } }
+});
+
+new Chart(chartBidang, {
+    type: 'polarArea',
+    data: {
+        labels: @json($bidangLabels),
+        datasets: [{
+            data: @json($bidangData),
+            backgroundColor: ['#6777ef','#ffa426','#63ed7a','#fc544b','#3abaf4']
+        }]
+    },
+    options: { responsive: true, plugins: { legend: { position: 'right' } } }
+});
+
+new Chart(chartHour, {
+    type: 'radar',
+    data: {
+        labels: @json($hourLabels),
+        datasets: [{
+            label: 'Jam Ramai',
+            data: @json($hourData),
+            backgroundColor: 'rgba(103,119,239,.2)',
+            borderColor: '#6777ef'
+        }]
+    },
+    options: { scales: { r: { beginAtZero: true } } }
+});
+</script>
 </body>
 </html>
