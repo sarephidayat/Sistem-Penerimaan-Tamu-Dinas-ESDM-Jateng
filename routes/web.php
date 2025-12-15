@@ -11,7 +11,6 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PemesananController;
 use App\Http\Controllers\StatistikController;
-use App\Http\Controllers\ProfileController;
 
 
 // ===============================Index================================
@@ -158,5 +157,3 @@ Route::get('/kepala-dinas', [KadisController::class, 'index'])
     ->name('kepala-dinas');
 
 
-Route::get('/api/chart-tren-kunjungan', [ChartController::class, 'GrafikTrenKunjungan']);
-Route::get('/chart-agenda-mingguan', [ChartController::class, 'chartAgendaMingguan']);
